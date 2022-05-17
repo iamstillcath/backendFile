@@ -20,13 +20,29 @@ let options = {
         url: "http://localhost:5000/",
       },
     ],
+    components:{
+  securitySchemes: [{
+      bearerAuth: [],   
+      name: "- bearerAuth",
+      in: 'header',
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      Authorization: 'Bearer <token>'
+  }],
+  security:{
+    bearerAuth: []
+  }
   },
+
+
+    },
 
   apis: [
      "./api/routes/user.js", "./api/routes/order.js"
   
   ],
-};
+}
 
 
 const swaggerSpec = swaggerJsDoc(options);

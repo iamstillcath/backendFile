@@ -27,6 +27,8 @@ const User = require("../models/user");
  * @swagger
  * /user/signup:
  *   post:
+ *       tags:
+ *           - Auth
  *       summary: Signup
  *       description: create new user
  *       requestBody:
@@ -91,6 +93,8 @@ router.post("/signup", (req, res, next) => {
  * @swagger
  * /user/login:
  *   post:
+ *       tags:
+ *           - Auth
  *       summary: login
  *       description: login existing account
  *       requestBody:

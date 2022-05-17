@@ -24,15 +24,16 @@ const Order = require("../models/order");
  *                    status:
  *                         type: string
  *                    currentLocation:
- *                          type: string
+ *                         type: string
+ *
  */
 
 /**
  * @swagger
  * /parcels:
- *   get: 
- *    security:
- *     - bearerAuth: []
+ *   get:
+ *       tags:
+ *           - Parcels
  *       summary: Get all parcels
  *       description: to get all parcel
  *       responses:
@@ -44,6 +45,8 @@ const Order = require("../models/order");
  *                            type: object
  *                            items:
  *                                $ref:'#components/schema/Parcels'
+ *       security:
+ *        - bearerAuth: []
  */
 
 router.get("/", (req, res, next) => {
@@ -68,6 +71,8 @@ router.get("/", (req, res, next) => {
  * @swagger
  * /parcel:
  *   post:
+ *       tags:
+ *           - Parcels
  *       summary: To insert new data
  *       description: add
  *       requestBody:
@@ -110,6 +115,8 @@ router.post("/", (req, res, next) => {
  * @swagger
  * /parcels/{id}:
  *   get:
+ *       tags:
+ *           - Parcels
  *       summary: Fetch id parcel
  *       description: to get a specific parcel
  *       parameters:
@@ -128,6 +135,8 @@ router.post("/", (req, res, next) => {
  *                            type: object
  *                            items:
  *                                $ref: '#components/schema/Parcels'
+ *       security:
+ *         - bearerAuth: []
  */
 
 router.get("/:id", (req, res, next) => {
@@ -154,6 +163,8 @@ router.get("/:id", (req, res, next) => {
  * @swagger
  * /parcels/{id}/destination:
  *   put:
+ *       tags:
+ *           - Parcels
  *       summary: Update Destination
  *       description: add
  *       parameters:
@@ -204,6 +215,8 @@ router.put("/:ordersId/destination", (req, res, next) => {
  * @swagger
  * /parcels/{id}/status:
  *   put:
+ *       tags:
+ *           - Parcels
  *       summary: Update Status
  *       description: add
  *       parameters:
@@ -255,6 +268,8 @@ router.put("/:statusId/status", (req, res, next) => {
  * @swagger
  * /parcels/{id}/currentLocation:
  *   put:
+ *       tags:
+ *           - Parcels
  *       summary: Update CurrentLocation
  *       description: add
  *       parameters:
@@ -305,6 +320,8 @@ router.put("/:statusId/currentLocation", (req, res, next) => {
  * @swagger
  * /parcels/{id}/delete:
  *   delete:
+ *       tags:
+ *           - Parcels
  *       summary: Delete id parcel
  *       description: to delete a specific parcel
  *       parameters:
@@ -317,7 +334,7 @@ router.put("/:statusId/currentLocation", (req, res, next) => {
  *       responses:
  *           200:
  *               description: Order deleted
- *             
+ *           
  */
 
 
