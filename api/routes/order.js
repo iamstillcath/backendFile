@@ -30,7 +30,9 @@ const Order = require("../models/order");
 /**
  * @swagger
  * /parcels:
- *   get:
+ *   get: 
+ *    security:
+ *     - bearerAuth: []
  *       summary: Get all parcels
  *       description: to get all parcel
  *       responses:
