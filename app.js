@@ -20,30 +20,24 @@ let options = {
         url: "http://localhost:5000/",
       },
     ],
-    components:{
-  securitySchemes: [{
-      bearerAuth: [],   
-      name: "- bearerAuth",
-      in: 'header',
-      type: 'http',
-      scheme: 'bearer',
-      bearerFormat: 'JWT',
-      Authorization: 'Bearer <token>'
-  }],
-  security:{
-    bearerAuth: []
-  }
+    components: {
+      securitySchemes: 
+      
+        {
+          bearerAuth: { type: "http", scheme: "bearer",bearerFormat: "JWT"},
+          // name: "bearerAuth",
+          // in: "header",
+          // type: "http",
+          // scheme: "bearer",
+          // bearerFormat: "JWT",
+          // Authorization: 'Bearer'
+      },
+      
+    },
   },
 
-
-    },
-
-  apis: [
-     "./api/routes/user.js", "./api/routes/order.js"
-  
-  ],
-}
-
+  apis: ["./api/routes/user.js", "./api/routes/order.js"],
+};
 
 const swaggerSpec = swaggerJsDoc(options);
 app.use("/api-docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
