@@ -7,6 +7,9 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 // let api=require('./api/routes/order')
 // let user=require('./api/routes/user')
+require("dotenv").config();
+
+const PORT = process.env.PORT || 5000;
 
 let options = {
   swaggerDefinition: {
@@ -45,14 +48,11 @@ app.use("/api-docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
 
-mongoose.connect(
-  "mongodb+srv://lucia:" +
-    process.env.MONGO_ATLAS_PW +
-    "@cluster0.sgtjf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  {
-    // useMongoClient:true
-  }
-);
+console.log('chck>>', process.env.DATABASE_URL)
+
+mongoose.connect(process.env.DATABASE_URL)
+.then(success => console.log("database connected successfully!"))
+.catch(error => console.log("error connecting to database!", error))
 
 mongoose.Promise = global.Promise;
 
@@ -92,5 +92,7 @@ app.use((error, req, res, next) => {
     },
   });
 });
+
+app.listen(PORT, () => console.log(`app is running on port ${PORT}`))
 
 module.exports = app;
