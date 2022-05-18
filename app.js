@@ -48,8 +48,6 @@ app.use("/api-docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
 
-console.log('chck>>', process.env.DATABASE_URL)
-
 mongoose.connect(process.env.DATABASE_URL)
 .then(success => console.log("database connected successfully!"))
 .catch(error => console.log("error connecting to database!", error))
