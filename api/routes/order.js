@@ -84,12 +84,11 @@ const Order = require("../models/order");
  *       
  */
 
-router.get("/", (req, res, next) => {
+router.get("/", checkAuth, (req, res, next) => {
   Order.find()
     .select(" product price quantity destination status _id currentLocation")
     .exec()
     .then((doc) => {
-      // console.log(doc);
       const response = {
         count: doc.length,
         parcels: doc,
@@ -97,7 +96,6 @@ router.get("/", (req, res, next) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      // console.log(err);
       res.status(500).json({ message: err });
     });
 });
@@ -124,7 +122,7 @@ router.get("/", (req, res, next) => {
  *               
  */
 
-router.post("/", (req, res, next) => {
+router.post("/", checkAuth,(req, res, next) => {
   const order = new Order({
     _id: new mongoose.Types.ObjectId(),
     product: req.body.product,
@@ -177,7 +175,7 @@ router.post("/", (req, res, next) => {
  *     
  */
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id",checkAuth, (req, res, next) => {
   const id = req.params.id;
   Order.findById(id)
     .select("_id product price quantity destination status currentLocation")
@@ -232,7 +230,7 @@ router.get("/:id", (req, res, next) => {
  *               
  */
 
-router.put("/:ordersId/destination", (req, res, next) => {
+router.put("/:ordersId/destination",checkAuth, (req, res, next) => {
   const id = req.params.ordersId;
   const destination = req.body.destination;
 
@@ -287,7 +285,7 @@ router.put("/:ordersId/destination", (req, res, next) => {
  */
 
 
-router.put("/:statusId/status", (req, res, next) => {
+router.put("/:statusId/status",checkAuth, (req, res, next) => {
   const id = req.params.statusId;
   const status = req.body.status;
 
@@ -342,7 +340,7 @@ router.put("/:statusId/status", (req, res, next) => {
  */
 
 
-router.put("/:statusId/currentLocation", (req, res, next) => {
+router.put("/:statusId/currentLocation",checkAuth, (req, res, next) => {
   const id = req.params.statusId;
   const CurrentLocation = req.body.currentLocation;
 
@@ -385,7 +383,7 @@ router.put("/:statusId/currentLocation", (req, res, next) => {
 
 
 
-router.delete("/:orderId/delete", (req, res, next) => {
+router.delete("/:orderId/delete",checkAuth, (req, res, next) => {
   const id = req.params.orderId;
   Order.remove({ _id: id })
     .exec()
