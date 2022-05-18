@@ -84,7 +84,7 @@ const Order = require("../models/order");
  *       
  */
 
-router.get("/", (req, res, next) => {
+router.get("/parcel", (req, res, next) => {
   Order.find()
     .select(" product price quantity destination status _id currentLocation")
     .exec()
