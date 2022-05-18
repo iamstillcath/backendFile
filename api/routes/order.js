@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const checkAuth = require("../middleware/check.auth");
+let checkAuth = require("../middleware/check.auth");
 
 const Order = require("../models/order");
 /**
@@ -25,7 +25,40 @@ const Order = require("../models/order");
  *                         type: string
  *                    currentLocation:
  *                         type: string
- *
+ *         
+ */
+
+/**
+ * @swagger
+ * components:
+ *      schema:
+ *          Parcel:
+ *                type: object
+ *                properties:
+ *                    destination: 
+ *                         type: string
+ */
+
+/**
+ * @swagger
+ * components:
+ *      schema:
+ *          Parce:
+ *                type: object
+ *                properties:
+ *                    status: 
+ *                         type: string
+ */
+
+/**
+ * @swagger
+ * components:
+ *      schema:
+ *          Parc:
+ *                type: object
+ *                properties:
+ *                    currentLocation: 
+ *                         type: string
  */
 
 /**
@@ -186,7 +219,7 @@ router.get("/:id", (req, res, next) => {
  *           content:
  *               application/json:
  *                     schema:
- *                         $ref: '#components/schema/Parcels'
+ *                         $ref: '#components/schema/Parcel'
  *       responses:
  *           200:
  *               description: Successfully updated destination
@@ -234,13 +267,13 @@ router.put("/:ordersId/destination", (req, res, next) => {
  *              required: true
  *              description: Numeric ID required
  *              schema:
- *               type: string
+ *               type: "status" 
  *       requestBody:
  *           required: true
  *           content:
  *               application/json:
  *                     schema:
- *                         $ref: '#components/schema/Parcels'
+ *                         $ref: '#components/schema/Parce'
  *       responses:
  *           200:
  *               description: Successfully updated status
@@ -295,7 +328,7 @@ router.put("/:statusId/status", (req, res, next) => {
  *           content:
  *               application/json:
  *                     schema:
- *                         $ref: '#components/schema/Parcels'
+ *                         $ref: '#components/schema/Parc'
  *       responses:
  *           200:
  *               description: Successfully updated current Location
