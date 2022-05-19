@@ -74,7 +74,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (res,req)=>{
+app.get("/", (req,res)=>{
   res.sendFile('index.html');
 })
 
