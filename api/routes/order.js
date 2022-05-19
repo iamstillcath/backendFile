@@ -88,7 +88,7 @@ const path = require('index.html');
 
 
  router.get('/',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/index.html'));
+  res.sendFile('../../index.html');
 
 });
 
