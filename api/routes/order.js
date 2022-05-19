@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const checkAuth = require("../middleware/check.auth");
-const path = require('index.html');
-
+// const path = require("./index.html");
 
 /**
  * @swagger
@@ -16,17 +15,17 @@ const path = require('index.html');
  *                        type: string
  *                    product:
  *                        type: string
- *                    price: 
+ *                    price:
  *                        type: integer
  *                    quantity:
  *                         type: integer
- *                    destination: 
+ *                    destination:
  *                         type: string
  *                    status:
  *                         type: string
  *                    currentLocation:
  *                         type: string
- *         
+ *
  */
 
 /**
@@ -36,7 +35,7 @@ const path = require('index.html');
  *          Parcel:
  *                type: object
  *                properties:
- *                    destination: 
+ *                    destination:
  *                         type: string
  */
 
@@ -47,7 +46,7 @@ const path = require('index.html');
  *          Parce:
  *                type: object
  *                properties:
- *                    status: 
+ *                    status:
  *                         type: string
  */
 
@@ -58,7 +57,7 @@ const path = require('index.html');
  *          Parc:
  *                type: object
  *                properties:
- *                    currentLocation: 
+ *                    currentLocation:
  *                         type: string
  */
 
@@ -81,15 +80,13 @@ const path = require('index.html');
  *                            type: object
  *                            items:
  *                                $ref:'#components/schema/Parcels'
- *       
- *       
+ *
+ *
  */
 
-
-
- router.get('/',(req,res)=>{
-  res.sendFile('/index.html');
-
+router.get("/", (req, res) => {
+  res.sendFile("./index.html");
+  console.log("it is working");
 });
 
 router.get("/", checkAuth, (req, res, next) => {
@@ -127,10 +124,10 @@ router.get("/", checkAuth, (req, res, next) => {
  *       responses:
  *           200:
  *               description: Successfully Added
- *               
+ *
  */
 
-router.post("/", checkAuth,(req, res, next) => {
+router.post("/", checkAuth, (req, res, next) => {
   const order = new Order({
     _id: new mongoose.Types.ObjectId(),
     product: req.body.product,
@@ -180,10 +177,10 @@ router.post("/", checkAuth,(req, res, next) => {
  *                            type: object
  *                            items:
  *                                $ref: '#components/schema/Parcels'
- *     
+ *
  */
 
-router.get("/:id",checkAuth, (req, res, next) => {
+router.get("/:id", checkAuth, (req, res, next) => {
   const id = req.params.id;
   Order.findById(id)
     .select("_id product price quantity destination status currentLocation")
@@ -199,9 +196,6 @@ router.get("/:id",checkAuth, (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
-
-
-
 
 /**
  * @swagger
@@ -232,13 +226,13 @@ router.get("/:id",checkAuth, (req, res, next) => {
  *               content:
  *               application/json:
  *                     schema:
- *                        type: 
+ *                        type:
  *                         items:
  *                              $ref: '#components/schema/Parcels'
- *               
+ *
  */
 
-router.put("/:ordersId/destination",checkAuth, (req, res, next) => {
+router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
   const id = req.params.ordersId;
   const destination = req.body.destination;
 
@@ -254,8 +248,6 @@ router.put("/:ordersId/destination",checkAuth, (req, res, next) => {
       res.status(500).json({ error: "this an error request" });
     });
 });
-
-
 
 /**
  * @swagger
@@ -273,7 +265,7 @@ router.put("/:ordersId/destination",checkAuth, (req, res, next) => {
  *              required: true
  *              description: Numeric ID required
  *              schema:
- *               type: "status" 
+ *               type: "status"
  *       requestBody:
  *           required: true
  *           content:
@@ -286,14 +278,13 @@ router.put("/:ordersId/destination",checkAuth, (req, res, next) => {
  *               content:
  *               application/json:
  *                     schema:
- *                        type: 
+ *                        type:
  *                         items:
  *                              $ref: '#components/schema/Parcels'
- *               
+ *
  */
 
-
-router.put("/:statusId/status",checkAuth, (req, res, next) => {
+router.put("/:statusId/status", checkAuth, (req, res, next) => {
   const id = req.params.statusId;
   const status = req.body.status;
 
@@ -309,8 +300,6 @@ router.put("/:statusId/status",checkAuth, (req, res, next) => {
       res.status(500).json({ error: "this an error request" });
     });
 });
-
-
 
 /**
  * @swagger
@@ -341,14 +330,13 @@ router.put("/:statusId/status",checkAuth, (req, res, next) => {
  *               content:
  *               application/json:
  *                     schema:
- *                        type: 
+ *                        type:
  *                         items:
  *                              $ref: '#components/schema/Parcels'
- *               
+ *
  */
 
-
-router.put("/:statusId/currentLocation",checkAuth, (req, res, next) => {
+router.put("/:statusId/currentLocation", checkAuth, (req, res, next) => {
   const id = req.params.statusId;
   const CurrentLocation = req.body.currentLocation;
 
@@ -364,7 +352,6 @@ router.put("/:statusId/currentLocation",checkAuth, (req, res, next) => {
       res.status(500).json({ error: "this an error request" });
     });
 });
-
 
 /**
  * @swagger
@@ -386,12 +373,10 @@ router.put("/:statusId/currentLocation",checkAuth, (req, res, next) => {
  *       responses:
  *           200:
  *               description: Order deleted
- *           
+ *
  */
 
-
-
-router.delete("/:orderId/delete",checkAuth, (req, res, next) => {
+router.delete("/:orderId/delete", checkAuth, (req, res, next) => {
   const id = req.params.orderId;
   Order.remove({ _id: id })
     .exec()
