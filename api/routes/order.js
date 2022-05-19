@@ -93,6 +93,7 @@ router.get("/", checkAuth, (req, res, next) => {
     .then((doc) => {
       const response = {
         count: doc.length,
+        
         parcels: doc,
       };
       res.status(200).json(response);
@@ -127,6 +128,7 @@ router.get("/", checkAuth, (req, res, next) => {
 router.post("/", checkAuth, (req, res, next) => {
   const order = new Order({
     _id: new mongoose.Types.ObjectId(),
+    user_id:req.body.user_id,
     product: req.body.product,
     price: req.body.price,
     quantity: req.body.quantity,
