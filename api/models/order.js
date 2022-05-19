@@ -8,6 +8,7 @@ const orderSchema = mongoose.Schema({
   destination: { type: String, required: true },
   status: { type: String, required: true },
   currentLocation: { type: String, required: true },
+  user_id: {type: String, required: true }
 });
 
 module.exports = mongoose.model("Order", orderSchema);

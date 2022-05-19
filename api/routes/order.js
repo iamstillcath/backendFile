@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const checkAuth = require("../middleware/check.auth");
-
+const Order= require('../models/order.js')
 
 /**
  * @swagger
@@ -87,14 +87,20 @@ const checkAuth = require("../middleware/check.auth");
 
 
 router.get("/", checkAuth, (req, res, next) => {
-  Order.find()
-    .select(" product price quantity destination status _id currentLocation")
+  const user=req.userData
+  Order.find({user_id: user.userId})
+    .select(" product price quantity destination status _id currentLocation user_id")
     .exec()
-    .then((doc) => {
+    .then((doc)=> {
+    //   const response_data=doc.filter(element=>{
+    //     if(element.user_id===user.userId){
+    //       return true
+    //     }
+      // })
       const response = {
         count: doc.length,
-        
         parcels: doc,
+
       };
       res.status(200).json(response);
     })
@@ -105,7 +111,7 @@ router.get("/", checkAuth, (req, res, next) => {
 
 /**
  * @swagger
- * /parcel:
+ * /parcels:
  *   post:
  *       tags:
  *           - Parcels
@@ -126,9 +132,10 @@ router.get("/", checkAuth, (req, res, next) => {
  */
 
 router.post("/", checkAuth, (req, res, next) => {
+  const user=req.userData
   const order = new Order({
     _id: new mongoose.Types.ObjectId(),
-    user_id:req.body.user_id,
+    user_id:user.userId,
     product: req.body.product,
     price: req.body.price,
     quantity: req.body.quantity,
