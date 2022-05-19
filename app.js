@@ -78,7 +78,7 @@ app.use((req, res, next) => {
 //   res.sendFile('index.html');
 // })
 app.get("/", (req, res) => {
-  res.sendFile("./index.html");
+  res.sendFile("../../index.html");
   console.log("it is working");
 });
 
