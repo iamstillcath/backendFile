@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const checkAuth = require("../middleware/check.auth");
+const path = require('index.html');
 
-const Order = require("../models/order");
+
 /**
  * @swagger
  * components:
@@ -83,6 +84,13 @@ const Order = require("../models/order");
  *       
  *       
  */
+
+
+
+ router.get('/',(req,res)=>{
+  res.sendFile(path.join(__dirname+'/index.html'));
+
+});
 
 router.get("/", checkAuth, (req, res, next) => {
   Order.find()
