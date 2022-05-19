@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (res,req)=>{
-  res.status(200).send('Welcome to Api Documentation page')
+  res.sendFile('index.html');
 })
 
 
