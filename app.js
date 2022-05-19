@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-
+const path = require("path");
 
 require("dotenv").config();
 
@@ -74,13 +74,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/", (req,res)=>{
-//   res.sendFile('index.html');
-// })
-app.get("/", (req, res) => {
-  console.log("it is working")
-  res.sendFile("index.html");
-  ;
+
+app.get('/',function(req,res){
+  res.sendFile(path.join(__dirname+'/index.html'));
 });
 
 app.use("/parcels", orderRoute);
