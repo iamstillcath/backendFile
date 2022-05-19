@@ -22,6 +22,21 @@ const User = require("../models/user");
  */
 
 
+/**
+ * @swagger
+ * components:
+ *      schema:
+ *          aut:
+ *                type: object
+ *                properties:
+ *                    email:
+ *                        type: string
+ *                    password: 
+ *                        type: string
+ */
+
+
+
 
 /**
  * @swagger
@@ -102,7 +117,7 @@ router.post("/signup", (req, res, next) => {
  *           content:
  *               application/json:
  *                     schema:
- *                         $ref: '#components/schema/auth'
+ *                         $ref: '#components/schema/aut'
  *       responses:
  *           200:
  *               description: Login successful

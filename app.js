@@ -5,8 +5,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-// let api=require('./api/routes/order')
-// let user=require('./api/routes/user')
+
+
 require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
@@ -49,8 +49,8 @@ const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
 
 mongoose.connect(process.env.DATABASE_URL)
-.then(success => console.log("database connected successfully!"))
-.catch(error => console.log("error connecting to database!", error))
+.then(success)
+.catch(error)
 
 mongoose.Promise = global.Promise;
 
@@ -73,6 +73,11 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.get("/", (res,req)=>{
+  res.status(200).send('Welcome to Api Documentation page')
+})
+
 
 app.use("/parcels", orderRoute);
 app.use("/user", userRoute);
