@@ -84,10 +84,7 @@ const checkAuth = require("../middleware/check.auth");
  *
  */
 
-router.get("/", (req, res) => {
-  res.sendFile("./index.html");
-  console.log("it is working");
-});
+
 
 router.get("/", checkAuth, (req, res, next) => {
   Order.find()
