@@ -49,8 +49,8 @@ const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
 
 mongoose.connect(process.env.DATABASE_URL)
-.then(success)
-.catch(error)
+.then(success=>{})
+.catch(error=>{})
 
 mongoose.Promise = global.Promise;
 
