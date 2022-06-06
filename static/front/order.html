@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    rel="stylesheet"
+    type="text/css"
+    media="screen"
+    href="./styles/order.css"
+  />
+</head>
+<body>
+    <header>
+        <div class="headSection">
+          <a href="#" class="logo"><img src="./images/logo.png"/></a>
+          <nav class="headerNav">
+            <a class="burger-nav"></a>
+            <ul>
+              <li><a id="nameBar"></a></li>
+              <li><a href="./user.html">Dashboard</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+  
+      <section class="form-section">
+        <div>
+          <form  id="registration-form" autocomplete="off">
+            <h2>CREATE ORDER</h2>
+            <h3>Product</h3>
+            <input type="text" id="product" name="product"  class="field" required/><br />
+            <h3>Price</h3>
+            <input type="number" id="price" name="price"  class="field"required/><br />
+            <h3>Quantity</h3>
+            <input type="number" id="quantity" name="quantity"  class="field" required/><br />
+            <h3>Destination</h3>
+            <input type="text" id="destination" name="destination"  class="field" required/><br />
+            <h3>Current location</h3>
+            <input type="text" id="Current location" name="currentLocation"  class="field" required/><br />
+            <h3>Recipient Name</h3>
+            <input type="text" id="reciName" class="field" required/><br />
+            <h3>Recipient Mobile Number</h3>
+            <input type="text" id="reciNum" class="field" /><br>
+            <input type="submit" value="Create" class="submit" />
+          </form>
+        </div>
+      </section>
+</body>
+</html>

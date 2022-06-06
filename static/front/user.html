@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    rel="stylesheet"
+    type="text/css"
+    media="screen"
+    href="./styles/dashboard.css"
+  />
+</head>
+<body>
+    <ul>
+        <button id="logout">Logout</button>
+      </ul>
+      <section class="banner">
+        <div id="dashboard">
+          <span><a href="./order.html" id="orderRoute">Create Order</a></span>
+          <nav>
+            <ul>
+              <li>Number of Orders: <span id="ordersLength">0</span></li>
+              <li>Orders in transit: <span id="transit">0</span></li>
+              <li>Delivered: <span id="delivered">0</span></li>
+              <li>Cancelled Orders: <span id="cancelled">0</span></li>
+            </ul>
+          </nav>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Pickup Location</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Recipient Name</th>
+                <th scope="col">Recipient Phone Number</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody class="parcelDetails"></tbody>
+          </table>
+          <h1 id="error-msg"></h1>
+        </div>
+      </section>
+</body>
+</html>

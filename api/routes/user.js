@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const jwt=require('jsonwebtoken')
-
+const jwt = require("jsonwebtoken");
+const path = require("path");
 const User = require("../models/user");
+const { token } = require("morgan");
+// const { TokenExpiredError } = require("jsonwebtoken");
 
 /**
  * @swagger
@@ -17,10 +19,12 @@ const User = require("../models/user");
  *                        type: string
  *                    email:
  *                        type: string
- *                    password: 
+ *                    password:
  *                        type: string
+ *                    role:
+ *                        type: string 
+ * 
  */
-
 
 /**
  * @swagger
@@ -31,12 +35,9 @@ const User = require("../models/user");
  *                properties:
  *                    email:
  *                        type: string
- *                    password: 
+ *                    password:
  *                        type: string
  */
-
-
-
 
 /**
  * @swagger
@@ -55,55 +56,71 @@ const User = require("../models/user");
  *       responses:
  *           200:
  *               description:  User Successfully created
- *               
+ *
  */
 
+// router.get("/login", (req, res) => {
+//   res.render("/login");
+// });
 
 router.post("/signup", (req, res, next) => {
-
-  User.find({ email: req.body.email })
+  User.find({email: req.body.email})
     .exec()
     .then((user) => {
       if (user.length >= 1) {
         return res.status(409).json({
-          message: "Mail exists"
-          
-           }); 
-
+          message: "Mail exists",
+        });
       } else {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
-          if (err) {
-            return res.status(500).json({
-              error: err,
-            });
-          } else {
-            const user = new User({
-              _id: new mongoose.Types.ObjectId(),
-              name: req.body.name,
-              email: req.body.email,
-              password: hash,
-            });
-            user
-              .save()
-              .then((result) => {
-                console.log(result);
-                res.status(201).json({
-                  message: "User Created",
-                });
-              })
-              .catch((err) => {
-                console.log(err);
-                res.status(500).json({
-                  error: err,
-                });
+          bcrypt.compare(req.body.password, user.password, () => {
+            if (err) {
+              return res.status(500).json({
+                message: "Incorrect credentials",
               });
-          }
+            } else {
+              const user = new User({
+                _id: new mongoose.Types.ObjectId(),
+                name: req.body.name,
+                email: req.body.email,
+                password: hash,
+                role: req.body.role
+              })
+              user
+
+                .save()
+
+                .then((result) => {
+                
+                  const token = jwt.sign(
+                    {
+                      email: user.email,
+                      userId: user._id,
+                     admin:1
+                    },
+                    process.env.JWT_KEY,
+                    {
+                      expiresIn: "10min",
+                    }
+                  );
+                  return res.status(201).json({
+                    message: "User Created",
+                    token: token,
+                    // admin:1
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.status(500).json({
+                    error: err,
+                  });
+                });
+            }
+          });
         });
       }
     });
 });
-
-
 
 /**
  * @swagger
@@ -122,7 +139,7 @@ router.post("/signup", (req, res, next) => {
  *       responses:
  *           200:
  *               description: Login successful
- *               
+ *
  */
 
 router.post("/login", (req, res, next) => {
@@ -131,35 +148,34 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: "Auth failed",
+          message: "Wrong email",
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
           return res.status(401).json({
-            message: "Auth failed",
+            message: "Incorrect password",
           });
         }
         if (result) {
-           const token=jwt.sign(
+          const token = jwt.sign(
             {
-              email:user[0].email,
-              userId:user[0]._id
+              email: user[0].email,
+              userId: user[0]._id,
+              role: user[0].role
             },
             process.env.JWT_KEY,
             {
-              expiresIn:'1h'
+              expiresIn: "2min",
             }
-          )
-          return res.status(200).json({
-            message: "Auth sucessful",
-            token:token,
-            userId:user[0]._id
-          });
+          );
+         
+       return res.status('200').json({message:"login successful", token: token, role:user[0].role})
+         
         }
-        res.status(401).json({
-            message: "Auth failed",
-        });
+        res.status(401).send(
+          'Wrong credentials <a href="/login.html"> click here to go back to Login page</a>.',
+        )
       });
     })
     .catch((err) => {
@@ -169,6 +185,10 @@ router.post("/login", (req, res, next) => {
       });
     });
 });
+
+
+
+ 
 
 router.delete("/:userId", (req, res, next) => {
   User.remove({ _id: req.params.userId })

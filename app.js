@@ -28,12 +28,7 @@ let options = {
       
         {
           bearerAuth: { type: "http", scheme: "bearer",bearerFormat: "JWT"},
-          // name: "bearerAuth",
-          // in: "header",
-          // type: "http",
-          // scheme: "bearer",
-          // bearerFormat: "JWT",
-          // Authorization: 'Bearer'
+        
       },
       
     },
@@ -44,6 +39,9 @@ let options = {
 
 const swaggerSpec = swaggerJsDoc(options);
 app.use("/api-docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(express.static(path.join(__dirname, 'static')));
+
+
 
 const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
@@ -78,6 +76,10 @@ app.use((req, res, next) => {
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
+
+// app.get("/signup", (req,res)=>{
+//   res.render("register.html")
+// })
 
 app.use("/parcels", orderRoute);
 app.use("/user", userRoute);

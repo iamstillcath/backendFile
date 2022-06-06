@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const checkAuth = require("../middleware/check.auth");
-const Order= require('../models/order.js')
+const Admin = require("../middleware/admin");
+const Order= require('../models/order.js');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 /**
  * @swagger
@@ -11,8 +14,7 @@ const Order= require('../models/order.js')
  *          Parcels:
  *                type: object
  *                properties:
- *                    _id:
- *                        type: string
+ *                   
  *                    product:
  *                        type: string
  *                    price:
@@ -21,8 +23,7 @@ const Order= require('../models/order.js')
  *                         type: integer
  *                    destination:
  *                         type: string
- *                    status:
- *                         type: string
+ *                    
  *                    currentLocation:
  *                         type: string
  *
@@ -86,17 +87,13 @@ const Order= require('../models/order.js')
 
 
 
-router.get("/", checkAuth, (req, res, next) => {
-  const user=req.userData
-  Order.find({user_id: user.userId})
-    .select(" product price quantity destination status _id currentLocation user_id")
+router.get("/", Admin,(req, res, next) => {
+
+  Order.find()
+    .select(" product price quantity destination status currentLocation userId")
     .exec()
     .then((doc)=> {
-    //   const response_data=doc.filter(element=>{
-    //     if(element.user_id===user.userId){
-    //       return true
-    //     }
-      // })
+    
       const response = {
         count: doc.length,
         parcels: doc,
@@ -107,6 +104,7 @@ router.get("/", checkAuth, (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ message: err });
     });
+  
 });
 
 /**
@@ -135,18 +133,19 @@ router.post("/", checkAuth, (req, res, next) => {
   const user=req.userData
   const order = new Order({
     _id: new mongoose.Types.ObjectId(),
-    user_id:user.userId,
+    userId:user.userId,
     product: req.body.product,
     price: req.body.price,
     quantity: req.body.quantity,
     destination: req.body.destination,
-    status: req.body.status,
+    status: "Created",
     currentLocation: req.body.currentLocation,
   });
-  order.save().then((result) => {
+  order.save()
+  .then((result) => {
     res.status(200).json({
       message: "order successfully created",
-      output: order,
+      output: result,
     });
     // .catch((err) => {
     //   // console.log(err);
@@ -159,47 +158,45 @@ router.post("/", checkAuth, (req, res, next) => {
 
 /**
  * @swagger
- * /parcels/{id}:
+ * /parcels/user:
  *   get:
  *       tags:
- *           - Parcels
+ *         - Parcels
  *       security:
- *          - bearerAuth: []
- *       summary: Fetch id parcel
- *       description: to get a specific parcel
- *       parameters:
- *            - in: path
- *              name: id
- *              required: true
- *              description: Numeric ID required
- *              schema:
- *               type: string
+ *        - bearerAuth: []
+ *       summary: Get user parcels
+ *       description: to get user parcel
  *       responses:
  *           200:
- *               description: To fetch all parcels
+ *               description: To fetch user parcels
  *               content:
  *                   application/json:
  *                        schema:
  *                            type: object
  *                            items:
- *                                $ref: '#components/schema/Parcels'
+ *                                $ref:'#components/schema/Parcels'
+ *
  *
  */
 
-router.get("/:id", checkAuth, (req, res, next) => {
-  const id = req.params.id;
-  Order.findById(id)
-    .select("_id product price quantity destination status currentLocation")
+
+
+ router.get("/user", checkAuth, (req, res, next) => {
+  const user=req.userData;
+  Order.find({userId: user.userId})
+    .select(" product price quantity destination status currentLocation userId")
     .exec()
-    .then((docu) => {
-      if (docu) {
-        res.status(200).json(docu);
-      } else {
-        res.status(404).json({ message: "no valid id for this" });
-      }
+    .then((doc)=> {
+      const response = {
+        count: doc.length,
+        parcels: doc,
+        
+
+      };
+     return res.status(200).json(response);
     })
     .catch((err) => {
-      res.status(500).json({ error: err });
+      res.status(500).json({ message: err });
     });
 });
 
@@ -269,9 +266,9 @@ router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
  *            - in: path
  *              name: id
  *              required: true
- *              description: Numeric ID required
+ *              description: ID required
  *              schema:
- *               type: "status"
+ *               type: string
  *       requestBody:
  *           required: true
  *           content:
@@ -290,9 +287,12 @@ router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/:statusId/status", checkAuth, (req, res, next) => {
+router.put("/:statusId/status", Admin, (req, res, next) => {
   const id = req.params.statusId;
+  const statuss=["Created","In-transit","Delivered"]
   const status = req.body.status;
+if (!statuss.includes(status))
+return  res.status(401).json({ message: "Status invalid" })
 
   Order.updateOne(
     { _id: id },
@@ -321,7 +321,7 @@ router.put("/:statusId/status", checkAuth, (req, res, next) => {
  *            - in: path
  *              name: id
  *              required: true
- *              description: Numeric ID required
+ *              description: ID required
  *              schema:
  *               type: string
  *       requestBody:
@@ -342,7 +342,7 @@ router.put("/:statusId/status", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/:statusId/currentLocation", checkAuth, (req, res, next) => {
+router.put("/:statusId/currentLocation", Admin, (req, res, next) => {
   const id = req.params.statusId;
   const CurrentLocation = req.body.currentLocation;
 
@@ -395,4 +395,51 @@ router.delete("/:orderId/delete", checkAuth, (req, res, next) => {
     });
 });
 
+/**
+ * @swagger
+ * /parcels/logout:
+ *   post:
+ *       tags:
+ *         - Parcels
+ *       security:
+ *        - bearerAuth: []
+ *       summary: Logout user parcels
+ *       description: to logout all parcel
+ *       responses:
+ *           200:
+ *               description: To logout all parcels
+ *               content:
+ *                   application/json:
+ *                        schema:
+ *                            type: object
+ *                            items:
+ *                                $ref:'#components/schema/Parcels'
+ *
+ *
+ */
+
+
+
+//  router.post('/logout', checkAuth, async(req, res) => {
+//   try{
+//       let randomNumberToAppend = toString(Math.floor((Math.random() * 1000) + 1));
+//       let randomIndex = Math.floor((Math.random() * 10) + 1);
+//       let hashedRandomNumberToAppend = await bcrypt.hash(randomNumberToAppend, 10);
+  
+//       // now just concat the hashed random number to the end of the token
+//       req.token = req.token + hashedRandomNumberToAppend;
+//       console.log("this is the token", req.token)
+//       return res.status(200).json(' user logout');
+//   }catch(err){
+//       return res.status(500).json(err.message);
+//   }
+// });
+
+
+
+ router.post("/logout",checkAuth,(req, res, next) => {
+ 
+ res.cookie("jwt","",{maxAge:1});
+ res.status(200).json({message:"logout successful"})
+ })
 module.exports = router;
