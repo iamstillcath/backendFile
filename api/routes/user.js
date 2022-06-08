@@ -81,7 +81,7 @@ router.post("/signup", (req, res, next) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: hash,
-                role: req.decoded
+      
               });
               user
           
@@ -101,12 +101,13 @@ router.post("/signup", (req, res, next) => {
                   {
                       expiresIn : "1h"
                   });
+                  const decoded= jwt.verify(token, process.env.JWT_KEY )
                   return res.status(201).json({
                     message: "User Created",
                     token: token,
                     userId: user._id,
                     name: user.name,
-                    role:user.role
+                    role: decoded.role
                   });
                 })
                 .catch((err) => {
