@@ -12,16 +12,18 @@ document.querySelector("#nameBar").innerHTML = firstname.toUpperCase();
 
 //fetch request to render all user parcels into the table
 const userId = localStorage.getItem("userId");
-fetch(`https://send-it-backend.herokuapp.com/api/v1/users/${userId}/parcels`, {
+fetch("/parcels/user", {
   method: "GET",
   headers: {
-    Authorization: token
+    Authorization: 'Bearer ' + token
   }
 })
   .then(res => res.json())
   .then(data => {
+    console.log("this is data",data)
     const ordersTable = document.querySelector(".parcelDetails");
     if (!data.length) {
+
       document.querySelector("#error-msg").innerHTML =
         "You do not have any Parcel Delivery Order yet";
     } else {
@@ -71,11 +73,13 @@ logout.addEventListener('click', function () {
 const renderTableData = (data, ordersTable) => {
   data.forEach(parcel => {
     let parcelRow = document.createElement("tr");
-    parcelRow.innerHTML = `<th scope="row">${parcel.id}</th>
-                          <td>${parcel.pickup_location}</td>
+    parcelRow.innerHTML = `<th scope="row">${parcel._id}</th>
+                          <td>${parcel.product}</td>
+                          <td>${parcel.price}</td>
+                          <td>${parcel.pickupLocation}</td>
                           <td class="remove-second">${parcel.destination}</td>
-                          <td>${parcel.recipient_name}</td>
-                          <td>${parcel.recipient_phone_no}</td>
+                          <td>${parcel.recipientNumber}</td>
+                          <td>${parcel.currentLocation}</td>
                           <td>${parcel.status}</td>
                            `;
     ordersTable.append(parcelRow);

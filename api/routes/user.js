@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const User = require("../models/user");
 const { token } = require("morgan");
-
+// const { TokenExpiredError } = require("jsonwebtoken");
 
 /**
  * @swagger
@@ -21,7 +21,7 @@ const { token } = require("morgan");
  *                        type: string
  *                    password:
  *                        type: string
- *                    
+ *                   
  *
  */
 
@@ -89,16 +89,18 @@ router.post("/signup", (req, res, next) => {
                 .save()
 
                 .then((result) => {
-                  const token = jwt.sign(
-                    {
+                  const adminEmail = "catherine@gmail.com";
+                  const role = user.email===adminEmail? "admin" : "user";
+                  const token = jwt.sign( 
+                  {
                       email: user.email,
                       userId: user._id,
-                    },
-                    process.env.JWT_KEY,
-                    {
-                      expiresIn: "1hr",
-                    }
-                  );
+                      role
+                  },
+                  process.env.JWT_KEY,
+                  {
+                      expiresIn : "1h"
+                  });
                   return res.status(201).json({
                     message: "User Created",
                     token: token,

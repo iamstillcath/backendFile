@@ -11,13 +11,12 @@ if (!token) {
 document.querySelector("#nameBar").innerHTML = firstname.toUpperCase();
 
 const theOrder = (e) => {
-  console.log(token)
   e.preventDefault();
   fetch("/parcels" , {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization:  token
+      Authorization: 'Bearer ' + token
     },
     body: JSON.stringify({
       user_Id: localStorage.getItem("userId"),

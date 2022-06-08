@@ -19,8 +19,8 @@ const bcrypt = require("bcrypt");
  *                        type: string
  *                    price:
  *                        type: integer
- *                    quantity:
- *                         type: integer
+ *                    pickupLocation:
+ *                         type: string
  *                    destination:
  *                         type: string
  *                    currentLocation:
@@ -97,7 +97,7 @@ router.get("/", Admin, (req, res, next) => {
         count: doc.length,
         parcels: doc,
       };
-      res.status(200).json(response);
+      res.status(200).json(doc);
     })
     .catch((err) => {
       res.status(500).json({ message: err });
@@ -133,7 +133,7 @@ router.post("/",checkAuth, (req, res, next) => {
     user_Id: user.userId,
     product: req.body.product,
     price: req.body.price,
-    quantity: req.body.quantity,
+    pickupLocation: req.body.pickupLocation,
     destination: req.body.destination,
     status: "Created",
     currentLocation: req.body.currentLocation,
@@ -188,7 +188,7 @@ router.get("/user", checkAuth, (req, res, next) => {
         count: doc.length,
         parcels: doc,
       };
-      return res.status(200).json(response);
+      return res.status(200).send(doc);
     })
     .catch((err) => {
       res.status(500).json({ message: err });
