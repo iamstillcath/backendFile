@@ -13,7 +13,7 @@
   />
   </head>
   <body>
-    <form action="user/signup" method="POST">
+    <form id="registerpage">
       <h1>Parcel Delivery</h1>
       <br />
       <h2>SIGNUP FOR NEW USERS</h2>
@@ -48,17 +48,20 @@
       </div>
       <br />
       <div>
-        <label>Role
-         <select name="role">
+        <!-- <label>Role
+         <select name="role" class="role" required>
            <option value="">SELECT ROLE</option>
           <option value="admin">admin</option>
           <option value="user">user</option>
-         </select>
+         </select> -->
           
         </label>
       </div>
-      <button type="submit" value="submit">Sign-up</button>
+      <button type="submit" class="signUp">Sign-up</button>
     </form>
     <p>Already have an account? <a href="./login.html" id="login">Login</a></p>
+
+
+    <script src="./scripts/register.js"></script>
   </body>
 </html>

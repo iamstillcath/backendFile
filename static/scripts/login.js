@@ -7,19 +7,28 @@ const login = (e) => {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-        email: document.querySelector(".email").value,
-        password: document.querySelector(".pass").value
+      email: document.querySelector(".email").value,
+      password: document.querySelector(".pass").value,
     }),
   })
     .then((res) => res.json())
     .then((data) => {
-        console.log("data", data)
-        if(data.token){
-            alert("login succesful!")
-            window.location.href = "./user.html"
-        }else{
-            alert(data.message)
-        }
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem('firstname', data.name);
+        localStorage.setItem('role', data.role);
+
+        const role=localStorage.getItem('role');
+        console.log("this is role",role)
+        if(role==="user"){
+        alert("login succesful!");
+        window.location.href = "./order.html"
+        }else{ window.location.href = "./admin.html"
+      }
+      } else {
+        alert(data.message);
+      }
     })
     .catch((err) => console.log("error loggin in", err));
 };

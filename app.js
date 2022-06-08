@@ -24,13 +24,13 @@ let options = {
       },
     ],
     components: {
+      
       securitySchemes: 
       
         {
           bearerAuth: { type: "http", scheme: "bearer",bearerFormat: "JWT"},
         
       },
-      
     },
   },
 
@@ -66,7 +66,7 @@ app.use((req, res, next) => {
   );
 
   if (req.method == "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, PATCH,DELETE");
+    res.header("Access-Control-Allow-Methods", "Authorization","PUT, GET, POST, PATCH,DELETE");
     return res.status(200).json({});
   }
   next();
@@ -74,7 +74,7 @@ app.use((req, res, next) => {
 
 
 app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/index.html'));
+  res.sendFile(path.join(__dirname+'../front/index.html'));
 });
 
 // app.get("/signup", (req,res)=>{

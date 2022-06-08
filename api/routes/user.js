@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const User = require("../models/user");
 const { token } = require("morgan");
-// const { TokenExpiredError } = require("jsonwebtoken");
+
 
 /**
  * @swagger
@@ -21,9 +21,8 @@ const { token } = require("morgan");
  *                        type: string
  *                    password:
  *                        type: string
- *                    role:
- *                        type: string 
- * 
+ *                    
+ *
  */
 
 /**
@@ -59,12 +58,10 @@ const { token } = require("morgan");
  *
  */
 
-// router.get("/login", (req, res) => {
-//   res.render("/login");
-// });
+
 
 router.post("/signup", (req, res, next) => {
-  User.find({email: req.body.email})
+  User.find({ email: req.body.email })
     .exec()
     .then((user) => {
       if (user.length >= 1) {
@@ -84,29 +81,30 @@ router.post("/signup", (req, res, next) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: hash,
-                role: req.body.role
-              })
+                role: req.decoded
+              });
               user
+          
 
                 .save()
 
                 .then((result) => {
-                
                   const token = jwt.sign(
                     {
                       email: user.email,
                       userId: user._id,
-                     admin:1
                     },
                     process.env.JWT_KEY,
                     {
-                      expiresIn: "10min",
+                      expiresIn: "1hr",
                     }
                   );
                   return res.status(201).json({
                     message: "User Created",
                     token: token,
-                    // admin:1
+                    userId: user._id,
+                    name: user.name,
+                    role:user.role
                   });
                 })
                 .catch((err) => {
@@ -158,24 +156,34 @@ router.post("/login", (req, res, next) => {
           });
         }
         if (result) {
-          const token = jwt.sign(
-            {
+          const adminEmail = "catherine@gmail.com";
+          const role = user[0].email===adminEmail? "admin" : "user";
+          const token = jwt.sign( 
+          {
               email: user[0].email,
               userId: user[0]._id,
-              role: user[0].role
-            },
-            process.env.JWT_KEY,
-            {
-              expiresIn: "2min",
-            }
-          );
-         
-       return res.status('200').json({message:"login successful", token: token, role:user[0].role})
-         
+              role
+          },
+          process.env.JWT_KEY,
+          {
+              expiresIn : "1h"
+          });
+
+          return res
+            .status("200")
+            .json({
+              message: "login successful",
+              token: token,
+              role: role,
+              userId: user._Id,
+              name: user.name
+            });
         }
-        res.status(401).send(
-          'Wrong credentials <a href="/login.html"> click here to go back to Login page</a>.',
-        )
+        res
+          .status(401)
+          .send(
+            'Wrong credentials'
+          );
       });
     })
     .catch((err) => {
@@ -185,10 +193,6 @@ router.post("/login", (req, res, next) => {
       });
     });
 });
-
-
-
- 
 
 router.delete("/:userId", (req, res, next) => {
   User.remove({ _id: req.params.userId })

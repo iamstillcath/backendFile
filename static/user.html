@@ -9,14 +9,13 @@
     rel="stylesheet"
     type="text/css"
     media="screen"
-    href="./styles/dashboard.css"
+    href="./styles/user.css"
   />
 </head>
 <body>
-    <ul>
-        <button id="logout">Logout</button>
-      </ul>
+  
       <section class="banner">
+        <li><a id="nameBar"></a></li>
         <div id="dashboard">
           <span><a href="./order.html" id="orderRoute">Create Order</a></span>
           <nav>
@@ -41,7 +40,12 @@
             <tbody class="parcelDetails"></tbody>
           </table>
           <h1 id="error-msg"></h1>
+
+          <ul>
+            <button id="logout">Logout</button>
+          </ul>
         </div>
       </section>
+      <script src="./scripts/user.js"></script>
 </body>
 </html>
