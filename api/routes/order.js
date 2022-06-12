@@ -90,7 +90,7 @@ const bcrypt = require("bcrypt");
 
 router.get("/", Admin, (req, res, next) => {
   Order.find()
-    .select(" product price quantity destination status currentLocation userId")
+    .select(" product price quantity destination status pickupLocation recipientName recipientNumber currentLocation userId")
     .exec()
     .then((doc) => {
       const response = {
@@ -130,7 +130,7 @@ router.post("/",checkAuth, (req, res, next) => {
   const user = req.userData;
   const order = new Order({
     _id: new mongoose.Types.ObjectId(),
-    user_Id: user.userId,
+    userId: user.userId,
     product: req.body.product,
     price: req.body.price,
     pickupLocation: req.body.pickupLocation,
@@ -181,7 +181,7 @@ router.post("/",checkAuth, (req, res, next) => {
 router.get("/user", checkAuth, (req, res, next) => {
   const user = req.userData;
   Order.find({ userId: user.userId })
-    .select(" product price quantity destination status currentLocation userId")
+    .select(" product price quantity destination status pickupLocation recipientName recipientNumber currentLocation userId")
     .exec()
     .then((doc) => {
       const response = {
@@ -230,7 +230,7 @@ router.get("/user", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
+router.put("/:ordersId/destination", Admin, (req, res, next) => {
   const id = req.params.ordersId;
   const destination = req.body.destination;
 
@@ -337,7 +337,7 @@ router.put("/:statusId/status", Admin, (req, res, next) => {
  *
  */
 
-router.put("/:statusId/currentLocation", Admin, (req, res, next) => {
+router.put("/:statusId/currentLocation", checkAuth, (req, res, next) => {
   const id = req.params.statusId;
   const CurrentLocation = req.body.currentLocation;
 

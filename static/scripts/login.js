@@ -16,7 +16,6 @@ const login = (e) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userId", data.userId);
-        localStorage.setItem('firstname', data.name);
         localStorage.setItem('role', data.role);
 
         const role=localStorage.getItem('role');

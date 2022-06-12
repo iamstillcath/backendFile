@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>status</title>
+</head>
+<body>
+    <li><a id="nameBar"></a></li>
+    <li><a href="./user.html">Dashboard</a></li>
+
+   
+        <div class="form-section">
+          <form method="PATCH" id="status-form" autocomplete="off">
+            <h2>STATUS</h2>
+            <h3>Order ID:</h3>
+            <input type="number" id="orderId" class="field" autofocus/><br>
+            <h3>New Destination:</h3>
+            <input type="text" id="status" class="field" /><br>
+            <input type="submit" value="Change Status" class="statusButton" />
+          </form>
+        </div>
+        <script src="./scripts/statusEdit.js"></script>
+   </body>
+</html>

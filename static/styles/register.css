@@ -1,141 +1,94 @@
-* {
-    padding: 0;
-    margin: 0;
-  }
-  
-  body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  li {
-    list-style: none;
-  }
-  
-  a {
-    text-decoration: none;
-  }
-  
-  header {
-    width: 100%;
-    padding: 6px 0;
-    position: fixed;
-    z-index: 10;
-    background-color: white;
-  }
-  
-  .headSection {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .headSection .logo {
-    float: left;
-  }
-  
-  .headerNav {
-    float: right;
-  }
-  
-  .headerNav ul li {
-    float: left;
-    margin: 0 20px;
-    margin-top: 18px;
-  }
-  
-  .headerNav ul li a {
-    font-size: 21px;
-    color: black;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  }
-  
-  .form-section {
-    width: 100%;
-    position: relative;
-    top: 90px;
-    background-color: rgb(243, 240, 240);
-    height: 700px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .form-section div {
-    max-width: 550px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  form h2 {
-    margin-bottom: 15px;
-  }
-  
-  form input.field {
-    width: 100%;
-    margin: 10px 0;
-    height: 35px;
-    border-radius: 5px;
-  }
-  
-  .submit {
-    width: 110px;
-    height: 35px;
-    color: white;
-    background-color: red;
-    font-size: 25px;
-    font-family: "Times New Roman", Times, serif;
-    border-top-right-radius: 15px;
-    cursor: pointer;
-  }
-  
-  .submit:hover {
-    background-color: rgb(247, 95, 95);
-  }
-  
-  .form-section p {
-    margin-top: 15px;
-    font-size: 20px;
-    float: right;
-  }
-  
-  #login {
-    color: white;
-    padding: 3px 15px;
-    background-color: red;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: aqua;
+}
+
+
+.form {
+  width: 100%;
+  top: 90px;
+  height: 350px;
+  align-items: center;
+  justify-content: center;
+}
+
+.form div {
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h3 {
+  margin: 15px 150px;
+ 
+}
+
+input {
+  width: 100px;
+  min-width: 50%;
+  margin: 8px 0;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.signUp {
+  width: 90px;
+  height: 30px;
+  color: black;
+  background-color: white;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-left: 24%;
+}
+
+.signUp:hover {
+  background-color:gold
+}
+
+
+#login {
+  color: white;
+  padding: 3px 15px;
+  background-color: red;
+  text-decoration: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
   
   footer {
-    position: relative;
-    top: 90px;
-    background-color: lightgray;
+    /* position: relative; */
+    top: 50px;
+    background-color: gray;
     margin: 0;
     padding: 0;
-    border-top: 4px solid gray;
+    border-top: 3px solid black;
   }
   
   .footerSection {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    height: 180px;
-    border-bottom: 3px solid gray;
+    height: 230px;
+    border-bottom: 3px solid darkolivegreen
   }
   
   .footerSection ul li {
     float: left;
     width: 22%;
     margin: 25px 1.5%;
+    text-decoration: none;
   }
   
   .footerSection h2 {
     margin-bottom: 10px;
     font-size: 26px;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: sans-serif;
   }
   
   .footerSection a {
@@ -151,10 +104,7 @@
     justify-content: center;
     padding: 10px 0;
   }
-  
-  .copyrights img {
-    height: 50px;
-  }
+ 
   
   /* TABLETS */
   @media screen and (max-width: 705px) {
@@ -213,17 +163,7 @@
   /* SMARTPHONES */
   
   @media screen and (max-width: 465px) {
-    /* head section */
-    .burger-nav {
-      height: 40px;
-      display: block;
-      width: 100%;
-      background: url("../images/menu.jpg") no-repeat right center;
-      background-color: inherit;
-      cursor: pointer;
-      margin: 0;
-      padding: 0;
-    }
+  
   
     .headerNav ul.open {
       height: auto;
