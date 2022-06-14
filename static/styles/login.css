@@ -5,42 +5,27 @@
   
   body {
     width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: aqua;
+    margin: 40px;
+    background-color: whitesmoke;
   }
  
   
   .form {
-    width: 100%;
-    top: 90px;
+    top: 110px;
     height: 350px;
-    align-items: center;
-    justify-content: center;
   }
   
-  .form div {
-    max-width: 550px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  
- h3 {
-    margin: 15px 150px;
-   
-  }
   
 input {
     width: 100px;
     min-width: 50%;
-    margin: 8px 0;
     height: 25px;
     border-radius: 5px;
   }
   
   .loginBtn {
-    width: 90px;
-    height: 30px;
+    width: 150px;
+    height: 40px;
     color: black;
     background-color: white;
     font-size: 22px;
@@ -49,11 +34,11 @@ input {
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    margin-left: 24%;
+    /* margin-left: 24%; */
   }
   
   .loginBtn:hover {
-    background-color:gold
+    background-color:red
   }
   
   
@@ -77,7 +62,7 @@ input {
   }
   
   .footerSection {
-    max-width: 1200px;
+    /* max-width: 1200px; */
     width: 100%;
     margin: 0 auto;
     height: 230px;
@@ -94,7 +79,7 @@ input {
   .footerSection h2 {
     margin-bottom: 10px;
     font-size: 26px;
-    font-family: sans-serif;
+    font-family: monospace;
   }
   
   .footerSection a {

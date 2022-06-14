@@ -1,4 +1,3 @@
-console.log("this is admin page");
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -12,7 +11,6 @@ logout.addEventListener("click", function () {
   window.location.href = "./login.html";
 });
 
-//fetch request to render all user parcels into the table
 const userId = localStorage.getItem("userId");
 fetch("/parcels", {
   method: "GET",
@@ -30,7 +28,6 @@ fetch("/parcels", {
       data.sort((a, b) => a.id - b.id);
       renderTableData(data, ordersTable);
 
-      document.getElementById("ordersLength").innerHTML = `${data.length}`;
     }
   });
 
@@ -49,16 +46,6 @@ const renderTableData = (data, ordersTable) => {
                            `;
     ordersTable.append(outputRow);
 
-
-    // const destnatn = document.createElement('h2');
-    // destnatn.className = ('destinationh2');
-    // destnatn.innerHTML = `<a href="/destinatnEdit.html" id="changeDestination">Change Destination <i class="fas fa-edit"></i></a>`;
-    // document.getElementById('order').append(destnatn);
-
-    // const status = document.createElement('h2');
-    // status.className = ('status');
-    // status.innerHTML = `<a href="/status.html" id="status">change status<i class="fas fa-times"></i></a>`;
-    // document.getElementById('order').append(status);
 
   });
 };

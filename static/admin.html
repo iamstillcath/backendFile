@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>admin</title>
 </head>
+
 <body>
+  <div id="order">
     <li><button id="logout">Logout</button></li>
     <h2> List of all ordered parcels</h2>
-
+  
 
     <table class="table">
         <thead class="thead-head">
@@ -27,7 +29,10 @@
         </thead>
         
     <tbody class="parcelDetails"></tbody>
+    <h2><a href="/destinatnEdit.html" class="destinationh2" id="changeDestination">Change Destination<i class="fas fa-edit"></i></a></h2>
+    <h2> <a href="/status.html" id="status" class="status">Change status<i class="fas fa-times"></i></a></h2>
     <h1 id="error-msg"></h1>
+  </div>
      <script src="./scripts/admin.js"></script>
 </body>
 </html>

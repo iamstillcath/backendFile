@@ -1,44 +1,39 @@
-const firstname = localStorage.getItem("firstname");
-const userId = localStorage.getItem("userId");
 const token = localStorage.getItem('token');
 
-//preventing unauthorised users from accessing the page
+
 if(!token){
   window.location.href = './login.html';
 }
 
-document.querySelector("#nameBar").innerHTML = firstname.toUpperCase();
 
-//handling request to change a specific parcel destination
-const changeDestination = e => {
+const changeStatus = e => {
   e.preventDefault();
-  const userId = localStorage.getItem("userId");
-  fetch(`/${userId}/destination`, {
-    method: "PATCH",
+  fetch("/parcels/status", {
+    method: "PUT",
     headers: {
       "Content-type": "application/json",
       Authorization: 'Bearer ' + token
     },
     body: JSON.stringify({
-      parcelId: document.getElementById("orderId").value,
+      statusId: document.getElementById("orderId").value,
       status: document.getElementById("status").value,
-      user_id: userId
+      // user_id: userId
     })
   })
     .then(res => res.json())
-    .then(res => {
-      console.log(res);
-      if (res.details) {
+    .then(data => {
+      console.log(data);
+      if (data.status===1) {
         alert("Status changed successfully!");
-        window.location.href = "./user.html";
-      } else if (res.msg) {
-        toastr.error(res.msg);
+        window.location.href = "./admin.html";
+      } else  {
+        alert(data.message)
       }
     })
     .catch(err => console.log("error occured", err));
 };
 
 document
-  .getElementById("edit-form")
-  .addEventListener("submit", changeDestination);
+  .getElementById("status-form")
+  .addEventListener("submit", changeStatus);
 

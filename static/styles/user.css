@@ -7,6 +7,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: darkslategrey;
   }
   
   li {
@@ -70,10 +71,10 @@
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   }
    */
-  #nameDisplay {
+  /* #nameDisplay {
     color: darkred;
     font-weight: bold;
-  }
+  } */
   
   .banner {
     background-color: rgb(235, 232, 232);
@@ -90,6 +91,7 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    color: white;
   }
   
   #orderLink {
@@ -115,7 +117,7 @@
     text-align: left;
     max-width: 250px;
     width: 100%;
-    background-color: lightgray;
+    background-color: lightcyan;
     padding: 5px;
     border: 1px dotted gray;
     border-radius: 10px;

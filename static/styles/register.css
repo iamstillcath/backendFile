@@ -1,54 +1,41 @@
-body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: aqua;
-}
-
-
-.form {
-  width: 100%;
-  top: 90px;
-  height: 350px;
-  align-items: center;
-  justify-content: center;
-}
-
-.form div {
-  max-width: 550px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-h3 {
-  margin: 15px 150px;
  
-}
-
+  body {
+    width: 100%;
+    margin: 20px;
+    padding: 40px;
+    background-color: whitesmoke;
+  }
+ 
+  
+  .form {
+    top: 90px;
+    height: 330px;
+  }
+  
+  
 input {
-  width: 100px;
-  min-width: 50%;
-  margin: 8px 0;
-  height: 25px;
-  border-radius: 5px;
-}
-
-.signUp {
-  width: 90px;
-  height: 30px;
-  color: black;
-  background-color: white;
-  font-size: 18px;
-  font-family: "Times New Roman", Times, serif;
-  border-radius: 5px;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  margin-left: 24%;
-}
+    width: 100px;
+    min-width: 50%;
+    height: 25px;
+    border-radius: 5px;
+  }
+  
+  .signUp {
+    width: 150px;
+    height: 40px;
+    color: black;
+    background-color: white;
+    font-size: 22px;
+    font-family: "Times New Roman", Times, serif;
+    border-radius: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  
 
 .signUp:hover {
-  background-color:gold
+  background-color:red
 }
 
 
@@ -88,7 +75,7 @@ input {
   .footerSection h2 {
     margin-bottom: 10px;
     font-size: 26px;
-    font-family: sans-serif;
+    font-family: monospace;
   }
   
   .footerSection a {
