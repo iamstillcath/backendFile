@@ -242,7 +242,7 @@ router.get("/user", checkAuth, (req, res, next) => {
  */
 
 router.put("/:ordersId/destination", Admin, (req, res, next) => {
-  const id = req.body.ordersId;
+  const id = req.params.ordersId;
   const destination = req.body.destination;
   Order.updateOne(
     { _id: id },
@@ -293,7 +293,7 @@ router.put("/:ordersId/destination", Admin, (req, res, next) => {
  */
 
 router.put("/:ordersId/status", Admin, (req, res, next) => {
-  const id = req.body.statusId;
+  const id = req.params.statusId;
   const statuss = ["Created", "In-transit", "Delivered"];
   const status = req.body.status;
   if (!statuss.includes(status))
