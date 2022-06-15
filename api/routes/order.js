@@ -143,23 +143,11 @@ router.post("/",checkAuth, (req, res, next) => {
   order.save().then((result) => {
     res.status(200).json({
       message: "order successfully created",
-      output:{ 
-       _id: result._id,
-       userId: result.userId,
-       product: result.product,
-       price:result.price,
-       pickupLocation:result.pickupLocation,
-       destination:result.destination,
-       status:result.status,
-       currentLocation: result.currentLocation,
-       recipientName:result.recipientName,
-       recipientNumber:result.recipientNumber
-      }
+      output: result
     })
     
     })
     .catch((err) => {
-      // console.log(err);
       res.status(500).json({
         error: err
       });
@@ -241,8 +229,8 @@ router.get("/user", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/:ordersId/destination", Admin, (req, res, next) => {
-  const id = req.params.ordersId;
+router.put("/destination", Admin, (req, res, next) => {
+  const id = req.body.ordersId;
   const destination = req.body.destination;
   Order.updateOne(
     { _id: id },
@@ -292,8 +280,8 @@ router.put("/:ordersId/destination", Admin, (req, res, next) => {
  *
  */
 
-router.put("/:ordersId/status", Admin, (req, res, next) => {
-  const id = req.params.statusId;
+router.put("/status", Admin, (req, res, next) => {
+  const id = req.body.statusId;
   const statuss = ["Created", "In-transit", "Delivered"];
   const status = req.body.status;
   if (!statuss.includes(status))

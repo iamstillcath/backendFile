@@ -9,6 +9,17 @@
     padding: 0;
     background-color: darkslategrey;
   }
+  table , tr,th{
+    border: 1px solid black;
+    padding: 4px;
+    text-align: center;
+    /* font-weight: bold; */
+   
+}
+h2{
+  font-size: 28px;
+  color: white;
+}
   
   li {
     list-style: none;
@@ -63,27 +74,14 @@
     background-color: rgb(240, 112, 112);
     padding: 6px 16px;
   }
-/*   
-  .headerNav ul li a {
-    font-size: 21px;
-    color: black;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  }
-   */
-  /* #nameDisplay {
-    color: darkred;
-    font-weight: bold;
-  } */
+
   
   .banner {
     background-color: rgb(235, 232, 232);
     position: relative;
-    top: 91px;
     width: 100%;
     text-align: center;
     padding: 140px 0;
-    overflow: scroll;
     background-color: darkslategray;
   }
   
@@ -92,6 +90,7 @@
     max-width: 1200px;
     margin: 0 auto;
     color: white;
+    font-size: 22px;
   }
   
   #orderLink {

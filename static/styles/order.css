@@ -63,6 +63,12 @@
     align-items: center;
     justify-content: center;
   }
+  h4{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    margin-top: 20px;
+  }
   
   .form-section div {
     max-width: 550px;
