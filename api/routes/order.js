@@ -190,7 +190,7 @@ router.get("/user", checkAuth, (req, res, next) => {
       return res.status(200).send(doc);
     })
     .catch((err) => {
-      res.status(500).json({ message: err });
+      res.status(500).json({ message: "you have no parcel order" });
     });
 });
 
@@ -229,8 +229,8 @@ router.get("/user", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/destination", Admin, (req, res, next) => {
-  const id = req.body.ordersId;
+router.put("/:ordersId/destination", Admin, (req, res, next) => {
+  const id = req.params.ordersId;
   const destination = req.body.destination;
   Order.updateOne(
     { _id: id },
@@ -280,8 +280,8 @@ router.put("/destination", Admin, (req, res, next) => {
  *
  */
 
-router.put("/status", Admin, (req, res, next) => {
-  const id = req.body.statusId;
+router.put("/:statusId/status", Admin, (req, res, next) => {
+  const id = req.params.statusId;
   const statuss = ["Created", "In-transit", "Delivered"];
   const status = req.body.status;
   if (!statuss.includes(status))
