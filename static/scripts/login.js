@@ -1,7 +1,7 @@
 const login = (e) => {
   e.preventDefault();
 
-  fetch("https://backendfiles.netlify.app/user/login", {
+  fetch("/user/login", {
     method: "POST",
     headers: {
       "content-type": "application/json",

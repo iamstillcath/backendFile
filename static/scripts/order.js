@@ -9,7 +9,7 @@ if (!token) {
 
 const theOrder = (e) => {
   e.preventDefault();
-  fetch("https://backendfiles.netlify.app/parcels" , {
+  fetch("/parcels" , {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

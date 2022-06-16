@@ -1,7 +1,7 @@
 const register = (e) => {
     e.preventDefault();
   
-    fetch("https://backendfiles.netlify.app/user/signup", {
+    fetch("/user/signup", {
       method: "POST",
       headers: {
         "content-type": "application/json",

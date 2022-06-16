@@ -82,7 +82,7 @@ app.get('/',function(req,res){
 //   res.render("register.html")
 // })
 
-app.use("/parcels", orderRoute);
+app.use("/backendfiles.netlify.app/parcels", orderRoute);
 app.use("/user", userRoute);
 
 app.use((req, res, next) => {

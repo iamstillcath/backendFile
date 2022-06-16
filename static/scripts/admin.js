@@ -12,7 +12,7 @@ logout.addEventListener("click", function () {
 });
 
 const userId = localStorage.getItem("userId");
-fetch("https://backendfiles.netlify.app/parcels", {
+fetch("/parcels", {
   method: "GET",
   headers: {
     Authorization: 'Bearer ' + token

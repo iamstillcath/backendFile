@@ -8,7 +8,7 @@ if(!token){
 
 const changeStatus = e => {
   e.preventDefault();
-  fetch("https://backendfiles.netlify.app/parcels/status", {
+  fetch("/parcels/status", {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
