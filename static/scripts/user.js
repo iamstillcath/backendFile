@@ -9,7 +9,7 @@ if(!token){
 
 
 const userId = localStorage.getItem("userId");
-fetch("/parcels/user", {
+fetch("https://backendfiles.netlify.app/parcels/user", {
   method: "GET",
   headers: {
     Authorization: 'Bearer ' + token

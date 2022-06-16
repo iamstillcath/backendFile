@@ -9,7 +9,7 @@ if(!token){
 const changeDestination = e => {
   e.preventDefault();
 
-  fetch("/parcels/destination", {
+  fetch("https://backendfiles.netlify.app/parcels/destination", {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
