@@ -21,6 +21,8 @@
     "start-dev": "nodemon app.js",
     "start": "node app.js"
   },
+  "build":
+"node ignore_build.js",
   "keywords": [
     "node",
     "restful",
