@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const path = require("path");
+const serverless=require("serverless-http")
 
 require("dotenv").config();
 
