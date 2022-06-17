@@ -31,7 +31,7 @@ const register = (e) => {
               alert(data.message)
           }
       })
-      .catch(data.message);
+      .catch(err);
   };
   
   document.querySelector(".signUp").addEventListener("click", register);

@@ -28,7 +28,7 @@ const login = (e) => {
         alert(data.message);
       }
     })
-    .catch(data.message) ;
+    .catch(err) ;
 };
 
 document.querySelector(".loginBtn").addEventListener("click", login);
