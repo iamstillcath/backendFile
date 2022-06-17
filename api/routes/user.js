@@ -21,6 +21,10 @@ const { token } = require("morgan");
  *                        type: string
  *                    password:
  *                        type: string
+ *                    phoneNumber:
+ *                        type: number
+ *                    address:
+ *                        type: string
  *                   
  *
  */
@@ -36,6 +40,7 @@ const { token } = require("morgan");
  *                        type: string
  *                    password:
  *                        type: string
+ *                    
  */
 
 /**
@@ -66,14 +71,14 @@ router.post("/signup", (req, res, next) => {
     .then((user) => {
       if (user.length >= 1) {
         return res.status(409).json({
-          message: "Mail exists",
+          message: "Account already exist for this Email"
         });
       } else {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           bcrypt.compare(req.body.password, user.password, () => {
             if (err) {
               return res.status(500).json({
-                message: "Incorrect credentials",
+                message: "Incorrect credentials"
               });
             } else {
               const user = new User({
@@ -81,6 +86,8 @@ router.post("/signup", (req, res, next) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: hash,
+                phoneNumber: req.body.phoneNumber,
+                address: req.body.address
       
               });
               user
@@ -104,10 +111,6 @@ router.post("/signup", (req, res, next) => {
                   const decoded= jwt.verify(token, process.env.JWT_KEY )
                   return res.status(201).json({
                     message: "User Created",
-                    token: token,
-                    userId: user._id,
-                    name: user.name,
-                    role: decoded.role
                   });
                 })
                 .catch((err) => {
@@ -177,16 +180,14 @@ router.post("/login", (req, res, next) => {
             .json({
               message: "login successful",
               token: token,
-              role: role,
-              userId: user._Id,
-              name: user.name
+              
             });
         }
         res
           .status(401)
-          .send(
-            'Wrong credentials'
-          );
+          .json({
+            message: "Incorrect credentials",
+          })
       });
     })
     .catch((err) => {

@@ -31,20 +31,20 @@ fetch("/parcels/user", {
         data.length
       }`;
 
-      const craetedOrders = data.filter(stat => stat.status === "Created")
+      const craetedOrders = data.filter(stat => stat.status === "created")
         .length;
       document.getElementById(
         "created"
       ).innerHTML = `${craetedOrders}`;
       
 
-      const Intransit = data.filter(stat => stat.status === "In-transit").length;
+      const Intransit = data.filter(stat => stat.status === "in-transit").length;
       document.getElementById(
         "In-transit"
       ).innerHTML = `${Intransit}`;
     
       s
-      const Delivered = data.filter(stat => stat.status === "Delivered").length;
+      const Delivered = data.filter(stat => stat.status === "delivered").length;
       document.getElementById(
         "Delivered"
       ).innerHTML = `${Delivered}`;

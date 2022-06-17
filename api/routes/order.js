@@ -135,7 +135,7 @@ router.post("/",checkAuth, (req, res, next) => {
     price: req.body.price,
     pickupLocation: req.body.pickupLocation,
     destination: req.body.destination,
-    status: "Created",
+    status: "created",
     currentLocation: req.body.currentLocation,
     recipientName: req.body.recipientName,
     recipientNumber: req.body.recipientNumber,
@@ -229,8 +229,8 @@ router.get("/user", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/destination", Admin, (req, res, next) => {
-  const id = req.body.ordersId;
+router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
+  const id = req.params.ordersId;
   const destination = req.body.destination;
   Order.updateOne(
     { _id: id },
@@ -280,9 +280,9 @@ router.put("/destination", Admin, (req, res, next) => {
  *
  */
 
-router.put("/status", Admin, (req, res, next) => {
-  const id = req.body.statusId;
-  const statuss = ["Created", "In-transit", "Delivered"];
+router.put("/:ordersId/status", Admin, (req, res, next) => {
+  const id = req.params.statusId;
+  const statuss = ["created", "in-transit", "delivered"];
   const status = req.body.status;
   if (!statuss.includes(status))
     return res.status(401).json({ message: "Status invalid" ,status:0});
@@ -296,7 +296,7 @@ router.put("/status", Admin, (req, res, next) => {
   )
     .then((result) => res.status(200).json({ message: "Status  updated ",status:1 }))
     .catch((err) => {
-      res.status(500).json({ error: "this an error request",status:0 });
+      res.status(500).json({ error: "no request found with this Id",status:0 });
     });
 });
 
@@ -335,7 +335,7 @@ router.put("/status", Admin, (req, res, next) => {
  *
  */
 
-router.put("/:statusId/currentLocation", checkAuth, (req, res, next) => {
+router.put("/:statusId/currentLocation", Admin, (req, res, next) => {
   const id = req.params.statusId;
   const CurrentLocation = req.body.currentLocation;
 
@@ -388,46 +388,4 @@ router.delete("/:orderId/delete", checkAuth, (req, res, next) => {
     });
 });
 
-/**
- * @swagger
- * /parcels/logout:
- *   post:
- *       tags:
- *         - Parcels
- *       security:
- *        - bearerAuth: []
- *       summary: Logout user parcels
- *       description: to logout all parcel
- *       responses:
- *           200:
- *               description: To logout all parcels
- *               content:
- *                   application/json:
- *                        schema:
- *                            type: object
- *                            items:
- *                                $ref:'#components/schema/Parcels'
- *
- *
- */
-
-//  router.post('/logout', checkAuth, async(req, res) => {
-//   try{
-//       let randomNumberToAppend = toString(Math.floor((Math.random() * 1000) + 1));
-//       let randomIndex = Math.floor((Math.random() * 10) + 1);
-//       let hashedRandomNumberToAppend = await bcrypt.hash(randomNumberToAppend, 10);
-
-//       // now just concat the hashed random number to the end of the token
-//       req.token = req.token + hashedRandomNumberToAppend;
-//       console.log("this is the token", req.token)
-//       return res.status(200).json(' user logout');
-//   }catch(err){
-//       return res.status(500).json(err.message);
-//   }
-// });
-
-router.post("/logout", checkAuth, (req, res, next) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.status(200).json({ message: "logout successful" });
-});
 module.exports = router;

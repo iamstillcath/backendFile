@@ -82,8 +82,8 @@ app.get('/',function(req,res){
 //   res.render("register.html")
 // })
 
-app.use("/backendfiles.netlify.app/parcels", orderRoute);
-app.use("https://backendfiles.netlify.app/user", userRoute);
+app.use("/parcels", orderRoute);
+app.use("/user", userRoute);
 
 app.use((req, res, next) => {
   const error = new Error("wrong route input");
