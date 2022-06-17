@@ -1,3 +1,35 @@
-*{
-    background-color: grey;
+h1{
+    margin-left: 30%;
+    color: white;
+}
+body{
+background: url(https://media.istockphoto.com/photos/above-table-top-view-of-female-warehouse-worker-or-seller-packing-picture-id1280366064?b=1&k=20&m=1280366064&s=170667a&w=0&h=1iKiEdOfm42YgX0QeY6wQ8l8eQtSAo4CVo5fcs-_ytM=);
+background-repeat: no-repeat ;
+background-size: cover;
+}
+
+a{
+    text-decoration: none;
+    display: flex;
+    background-color: white;
+   justify-content: space-between;
+   color: black;
+   padding: 10px;
+   height: 5px;
+   border-radius: 10px;
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 16px;
+   font-weight: bolder;
+   align-items: center;
+
+}
+
+span{
+    margin-left: 40%;
+    padding: 10px;
+
+}
+
+.about{
+    color:white;
 }
