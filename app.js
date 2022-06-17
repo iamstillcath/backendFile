@@ -40,7 +40,7 @@ let options = {
 
 const swaggerSpec = swaggerJsDoc(options);
 app.use("/api-docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
