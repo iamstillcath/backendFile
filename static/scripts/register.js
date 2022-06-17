@@ -31,7 +31,7 @@ const register = (e) => {
               alert(data.message)
           }
       })
-      .catch((err) => console.log("error loggin in", err));
+      .catch(data.message);
   };
   
   document.querySelector(".signUp").addEventListener("click", register);

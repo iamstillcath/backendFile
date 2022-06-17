@@ -19,7 +19,6 @@ const login = (e) => {
         localStorage.setItem('role', data.role);
 
         const role=localStorage.getItem('role');
-        console.log("this is role",role)
         if(role==="user"){
         alert("login succesful!");
         window.location.href = "./order.html"
@@ -29,7 +28,7 @@ const login = (e) => {
         alert(data.message);
       }
     })
-    .catch((err) => console.log("error loggin in", err));
+    .catch(data.message) ;
 };
 
 document.querySelector(".loginBtn").addEventListener("click", login);
