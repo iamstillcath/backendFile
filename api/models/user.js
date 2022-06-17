@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: true, minlength:6 },
   role: { type: String, require: true },
-  phoneNumber: { type: Number, required: true ,match: "@^(\d{10})$"},
+  phoneNumber: { type: Number, required: true ,match: /^\w+[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/ },
   address: { type: String, required: true },
 });
 
