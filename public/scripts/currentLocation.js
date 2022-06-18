@@ -6,34 +6,34 @@ if(!token){
 }
 
 
-const changeDestination = e => {
+const currentLocation = e => {
   e.preventDefault();
 
-  fetch("parcels/destination", {
+  fetch("parcels/currentLocation", {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
       Authorization: 'Bearer ' + token
     },
     body: JSON.stringify({
-      ordersId: document.getElementById("ordersId").value,
-      destination: document.getElementById("destination").value,
+      statusId: document.getElementById("ordersId").value,
+      currentLocation: document.getElementById("destination").value,
     
     })
   })
     .then(res => res.json())
     .then(data => {
+      console.log(data);
       if (data) {
-        alert("Destination changed successfully!");
-        window.location.href = "./user.html";
-      } else if (res.msg) {
-        alert(data.message)
-      }
+        alert("Current Location changed successfully!");
+        window.location.href = "./admin.html";
+      } else {
+      alert(data.message)}
     })
     .catch();
 };
 
 document
   .getElementById("edit-form")
-  .addEventListener("submit", changeDestination);
+  .addEventListener("submit", currentLocation);
 

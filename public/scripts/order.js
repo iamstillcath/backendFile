@@ -29,7 +29,14 @@ const theOrder = (e) => {
     .then((res) =>res.json())
     .then((data) => {
       if (data.token) {
-        alert("parcel created successfully!");
+        alert("parcel created successfully!")
+        document.getElementById("product").value=""
+       document.getElementById("price").value=""
+       document.getElementById("pickupLocation").value=""
+         document.getElementById("currentLocation").value=""
+         document.getElementById("destination").value=""
+        document.getElementById("recipientName").value=""
+      document.getElementById("recipientNumber").value=""
         window.location.href = "./user.html";
       } else {
         alert(data.message)

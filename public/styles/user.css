@@ -26,6 +26,7 @@ h2{
   
   a {
     text-decoration: none;
+    color: white;
   }
  
   #logout {
@@ -89,7 +90,7 @@ h2{
   
   #error-msg{
     font-size: 18px;
-    color: green(54, 54, 54);
+    /* color: green(54, 54, 54); */
     width: 100%;
     padding: 10px 0;
     font-weight: 600;

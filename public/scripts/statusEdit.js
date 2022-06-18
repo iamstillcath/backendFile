@@ -8,7 +8,7 @@ if(!token){
 
 const changeStatus = e => {
   e.preventDefault();
-  fetch("/parcels/status", {
+  fetch("parcels/status", {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
@@ -17,12 +17,11 @@ const changeStatus = e => {
     body: JSON.stringify({
       statusId: document.getElementById("orderId").value,
       status: document.getElementById("status").value,
-      // user_id: userId
+     
     })
   })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if (data.status===1) {
         alert("Status changed successfully!");
         window.location.href = "./admin.html";
@@ -30,7 +29,7 @@ const changeStatus = e => {
         alert(data.message)
       }
     })
-    .catch(err => console.log("error occured", err));
+    .catch();
 };
 
 document

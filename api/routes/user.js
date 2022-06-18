@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const User = require("../models/user");
 const { token } = require("morgan");
-// const { TokenExpiredError } = require("jsonwebtoken");
 
 /**
  * @swagger
@@ -116,7 +115,8 @@ router.post("/signup", (req, res, next) => {
                   const decoded = jwt.verify(token, process.env.JWT_KEY);
                   return res.status(201).json({
                     message: "User Created",
-                    token: token
+                    token: token,
+                    role:decoded.role
                   });
                 })
                 .catch((err) => {
@@ -181,10 +181,11 @@ router.post("/login", (req, res, next) => {
               expiresIn: "1h",
             }
           );
-
+          const decoded = jwt.verify(token, process.env.JWT_KEY);
           return res.status("200").json({
             message: "login successful",
             token: token,
+            role:decoded.role
           });
         }
         res.status(401).json({
