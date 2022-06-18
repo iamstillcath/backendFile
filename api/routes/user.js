@@ -22,10 +22,10 @@ const { token } = require("morgan");
  *                    password:
  *                        type: string
  *                    phoneNumber:
- *                        type: number
+ *                        type: string
  *                    address:
  *                        type: string
- *                   
+ *
  *
  */
 
@@ -40,7 +40,7 @@ const { token } = require("morgan");
  *                        type: string
  *                    password:
  *                        type: string
- *                    
+ *
  */
 
 /**
@@ -63,52 +63,61 @@ const { token } = require("morgan");
  *
  */
 
-
-
 router.post("/signup", (req, res, next) => {
+  const { password} = req.body;
+    if(password.length > 5 ) {
+        res.status(400).json({message:'Password must no be more than 6 characters long'});
+        }
   User.find({ email: req.body.email })
     .exec()
     .then((user) => {
+    
       if (user.length >= 1) {
         return res.status(409).json({
-          message: "Account already exist for this Email"
+          message: "Account already exist for this Email",
         });
-      } else {
+      } else {  
+        const { email, password} = req.body.password;
+        if(password.length > 6) {
+            res.status(400);
+            throw new Error('Password must be at least 8 characters long');
+            }
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           bcrypt.compare(req.body.password, user.password, () => {
             if (err) {
               return res.status(500).json({
-                message: "Incorrect credentials"
+                message: "Incorrect credentials",
               });
-            } else {
+            
+            }
+             else {
               const user = new User({
                 _id: new mongoose.Types.ObjectId(),
                 name: req.body.name,
                 email: req.body.email,
                 password: hash,
                 phoneNumber: req.body.phoneNumber,
-                address: req.body.address
-      
+                address: req.body.address,
               });
               user
-          
 
                 .save()
 
                 .then((result) => {
                   const adminEmail = "catherine@gmail.com";
-                  const role = user.email===adminEmail? "admin" : "user";
-                  const token = jwt.sign( 
-                  {
+                  const role = user.email === adminEmail ? "admin" : "user";
+                  const token = jwt.sign(
+                    {
                       email: user.email,
                       userId: user._id,
-                      role
-                  },
-                  process.env.JWT_KEY,
-                  {
-                      expiresIn : "1h"
-                  });
-                  const decoded= jwt.verify(token, process.env.JWT_KEY )
+                      role,
+                    },
+                    process.env.JWT_KEY,
+                    {
+                      expiresIn: "1h",
+                    }
+                  );
+                  const decoded = jwt.verify(token, process.env.JWT_KEY);
                   return res.status(201).json({
                     message: "User Created",
                   });
@@ -163,31 +172,27 @@ router.post("/login", (req, res, next) => {
         }
         if (result) {
           const adminEmail = "catherine@gmail.com";
-          const role = user[0].email===adminEmail? "admin" : "user";
-          const token = jwt.sign( 
-          {
+          const role = user[0].email === adminEmail ? "admin" : "user";
+          const token = jwt.sign(
+            {
               email: user[0].email,
               userId: user[0]._id,
-              role
-          },
-          process.env.JWT_KEY,
-          {
-              expiresIn : "1h"
-          });
+              role,
+            },
+            process.env.JWT_KEY,
+            {
+              expiresIn: "1h",
+            }
+          );
 
-          return res
-            .status("200")
-            .json({
-              message: "login successful",
-              token: token,
-              
-            });
+          return res.status("200").json({
+            message: "login successful",
+            token: token,
+          });
         }
-        res
-          .status(401)
-          .json({
-            message: "Incorrect credentials",
-          })
+        res.status(401).json({
+          message: "Incorrect credentials",
+        });
       });
     })
     .catch((err) => {

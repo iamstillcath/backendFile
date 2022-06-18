@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
     unique: true,
     match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
   },
-  password: { type: String, required: true, minlength:6 },
+  password: { type: String, required: true, maxlength:6 },
   role: { type: String, require: true },
   phoneNumber: { type: Number, required: true ,match: /^\w+[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/ },
   address: { type: String, required: true },
