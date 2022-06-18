@@ -249,7 +249,7 @@ router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
   )
     .then((result) => res.status(200).json({ message: "Destination updated" }))
     .catch((err) => {
-      res.status(500).json({ error: "this an error request" });
+      res.status(500).json({ error: "no request found with this Id" });
     });
 });
 
@@ -356,7 +356,7 @@ router.put("/:statusId/currentLocation", Admin, (req, res, next) => {
   )
     .then(() => res.status(200).json({ message: "Current Location  updated " }))
     .catch((err) => {
-      res.status(500).json({ error: "this an error request" });
+      res.status(500).json({ error: "no request found with this Id" });
     });
 });
 
@@ -392,7 +392,7 @@ router.delete("/:orderId/delete", checkAuth, (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({ error: "this is an error" });
+      res.status(500).json({ error: "no request found with this Id" });
     });
 });
 
