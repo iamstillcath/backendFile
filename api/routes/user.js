@@ -64,10 +64,7 @@ const { token } = require("morgan");
  */
 
 router.post("/signup", (req, res, next) => {
-  const { password} = req.body;
-    if(password.length > 5 ) {
-        res.status(400).json({message:'Password must no be more than 6 characters long'});
-        }
+ 
   User.find({ email: req.body.email })
     .exec()
     .then((user) => {
@@ -77,13 +74,12 @@ router.post("/signup", (req, res, next) => {
           message: "Account already exist for this Email",
         });
       } else {  
-        const { email, password} = req.body.password;
-        if(password.length > 6) {
-            res.status(400);
-            throw new Error('Password must be at least 8 characters long');
-            }
-        bcrypt.hash(req.body.password, 10, (err, hash) => {
-          bcrypt.compare(req.body.password, user.password, () => {
+        const { password} = req.body;
+        if(password.length > 6 ) {
+            res.status(400).json({message:'Password must no be more than 6 characters long'});
+            }else{
+        bcrypt.hash(password, 10, (err, hash) => {
+          bcrypt.compare(password, user.password, () => {
             if (err) {
               return res.status(500).json({
                 message: "Incorrect credentials",
@@ -120,6 +116,7 @@ router.post("/signup", (req, res, next) => {
                   const decoded = jwt.verify(token, process.env.JWT_KEY);
                   return res.status(201).json({
                     message: "User Created",
+                    token: token
                   });
                 })
                 .catch((err) => {
@@ -131,7 +128,7 @@ router.post("/signup", (req, res, next) => {
             }
           });
         });
-      }
+      }}
     });
 });
 

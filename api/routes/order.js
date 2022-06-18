@@ -143,7 +143,15 @@ router.post("/",checkAuth, (req, res, next) => {
   order.save().then((result) => {
     res.status(200).json({
       message: "order successfully created",
-      output: result
+      id: result._id,
+      product: result.product,
+      price:result.price,
+      pickupLocation:result.pickupLocation,
+      destination:result.destination,
+      status:result.status,
+      currentLocation:result.currentLocation,
+      recipientName:result.recipientName,
+      recipientNumber:result.recipientNumber
     })
     
     })
@@ -280,7 +288,7 @@ router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/:ordersId/status", Admin, (req, res, next) => {
+router.put("/:statusId/status", Admin, (req, res, next) => {
   const id = req.params.statusId;
   const statuss = ["created", "in-transit", "delivered"];
   const status = req.body.status;
