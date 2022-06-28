@@ -117,7 +117,7 @@ router.post("/signup", (req, res, next) => {
                   return res.status(201).json({
                     message: "User Created",
                     token: token,
-                    // role:decoded.role
+                    role:decoded.role
                   });
                 })
                 .catch((err) => {
@@ -187,7 +187,7 @@ router.post("/login", (req, res, next) => {
           return res.status("200").json({
             message: "login successful",
             token: token,
-            // role:decoded.role
+            role:decoded.role
           });
         }
         res.status(401).json({
