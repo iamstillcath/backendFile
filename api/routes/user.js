@@ -91,6 +91,7 @@ router.post("/signup", (req, res, next) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: hash,
+                confirmPassword: hash,
                 phoneNumber: req.body.phoneNumber,
                 address: req.body.address,
               });
@@ -153,6 +154,7 @@ router.post("/signup", (req, res, next) => {
  */
 
 router.post("/login", (req, res, next) => {
+  return  res.status(404).json({message: req.body})
   User.find({ email: req.body.email })
     .exec()
     .then((user) => {

@@ -6,8 +6,7 @@ const mongoose = require("mongoose");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const path = require("path");
-const serverless=require("serverless-http")
-
+const cors =require("cors")
 require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
@@ -54,6 +53,7 @@ mongoose.connect(process.env.DATABASE_URL)
 mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
+app.use(cors(corsOption))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -65,9 +65,11 @@ app.use((req, res, next) => {
     "Accept",
     "Authorization"
   );
+  res.header("Access-Control-Allow-Origin","true");
+
 
   if (req.method == "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "Authorization","PUT, GET, POST, PATCH,DELETE");
+    res.header("Access-Control-Allow-Methods", "Authorization","PUT, GET, POST, PATCH,DELETE","OPTIONS");
     return res.status(200).json({});
   }
   next();
