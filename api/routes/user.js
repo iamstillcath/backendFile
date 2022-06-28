@@ -154,13 +154,13 @@ router.post("/signup", (req, res, next) => {
  */
 
 router.post("/login", (req, res, next) => {
-  return  res.status(404).json({message: req.body})
   User.find({ email: req.body.email })
     .exec()
     .then((user) => {
       if (user.length < 1) {
         return res.status(401).json({
           message: "Wrong email",
+          user
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
