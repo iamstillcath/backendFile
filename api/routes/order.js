@@ -237,8 +237,8 @@ router.get("/user", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/destination", checkAuth, (req, res, next) => {
-  const id = req.body.ordersId;
+router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
+  const id = req.params.ordersId;
   const destination = req.body.destination;
   Order.updateOne(
     { _id: id },
@@ -288,8 +288,8 @@ router.put("/destination", checkAuth, (req, res, next) => {
  *
  */
 
-router.put("/status", Admin, (req, res, next) => {
-  const id = req.body.statusId;
+router.put("/:statusId/status", Admin, (req, res, next) => {
+  const id = req.params.statusId;
   const statuss = ["created", "in-transit", "delivered"];
   const status = req.body.status;
   if (!statuss.includes(status))
@@ -343,8 +343,8 @@ router.put("/status", Admin, (req, res, next) => {
  *
  */
 
-router.put("/currentLocation", Admin, (req, res, next) => {
-  const id = req.body.statusId;
+router.put("/:statusId/currentLocation", Admin, (req, res, next) => {
+  const id = req.params.statusId;
   console.log("this is the id==>" ,id)
   const CurrentLocation = req.body.currentLocation;
   console.log("this is the location==>" ,CurrentLocation)
@@ -384,8 +384,8 @@ router.put("/currentLocation", Admin, (req, res, next) => {
  *
  */
 
-router.delete("/delete", checkAuth, (req, res, next) => {
-  const id = req.body.orderId;
+router.delete("/:orderId/delete", checkAuth, (req, res, next) => {
+  const id = req.params.orderId;
   Order.remove({ _id: id })
     .exec()
     .then((result) => {
