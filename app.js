@@ -53,7 +53,7 @@ mongoose.connect(process.env.DATABASE_URL)
 mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
-app.use(cors(corsOption))
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
