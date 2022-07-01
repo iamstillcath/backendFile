@@ -345,9 +345,7 @@ router.put("/:statusId/status", Admin, (req, res, next) => {
 
 router.put("/:statusId/currentLocation", Admin, (req, res, next) => {
   const id = req.params.statusId;
-  console.log("this is the id==>" ,id)
   const CurrentLocation = req.body.currentLocation;
-  console.log("this is the location==>" ,CurrentLocation)
   Order.updateOne(
     { _id: id },
     {

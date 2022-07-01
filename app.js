@@ -79,9 +79,6 @@ app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/front/index.html'));
 });
 
-// app.get("/signup", (req,res)=>{
-//   res.render("register.html")
-// })
 
 app.use("/parcels", orderRoute);
 app.use("/user", userRoute);
