@@ -123,7 +123,7 @@ router.post("/signup", (req, res, next) => {
                 .catch((err) => {
                   console.log(err);
                   res.status(500).json({
-                    error: err,
+                    message: "please check and correct the required fields",
                   });
                 });
             }
@@ -160,7 +160,6 @@ router.post("/login", (req, res, next) => {
       if (user.length < 1) {
         return res.status(401).json({
           message: "Wrong email",
-          user
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
@@ -198,7 +197,7 @@ router.post("/login", (req, res, next) => {
     .catch((err) => {
       console.log(err);
       res.status(500).json({
-        error: err,
+        message: "please check and correct the required fields",
       });
     });
 });
