@@ -13,7 +13,8 @@
     "morgan": "^1.10.0",
     "netlify": "^11.0.1",
     "swagger-jsdoc": "^6.0.0",
-    "swagger-ui-express": "^4.4.0"
+    "swagger-ui-express": "^4.4.0",
+    "validate-phone-number-node-js": "^0.0.1"
   },
   "name": "node-rrset-api",
   "version": "1.0.0",

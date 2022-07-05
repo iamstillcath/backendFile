@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const orderSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  product: { type: String, required: true },
+  itemDescription: { type: String, required: true },
   price: { type: Number, required: true },
   pickupLocation: { type: String, required: true },
   destination: { type: String, required: true },
