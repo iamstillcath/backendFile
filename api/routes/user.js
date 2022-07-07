@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const User = require("../models/user");
 const { token } = require("morgan");
-const validatePhoneNumber = require('validate-phone-number-node-js');
 
 /**
  * @swagger

@@ -247,9 +247,9 @@ router.put("/:ordersId/destination", checkAuth, (req, res, next) => {
     .then((ras) => {
       const foundStatus = ras.status;
       if (foundStatus === "delivered") {
-        return res
+         res
           .status(400)
-          .json({ message: "This package has been delivered" });
+          .json({ error: "This package has been delivered" });
       } else {
         const destination = req.body.destination;
         Order.updateOne(
