@@ -318,7 +318,7 @@ router.put("/:statusId/status", Admin, (req, res, next) => {
       if (foundStatus === "delivered") {
         return res
           .status(400)
-          .json({ message: "This package has been delivered" });
+          .json({ error: "This package has been delivered" });
       } else {
         Order.updateOne(
           { _id: id },
@@ -383,7 +383,7 @@ router.put("/:statusId/currentLocation", Admin, (req, res, next) => {
     if (foundStatus === "delivered") {
       return res
         .status(400)
-        .json({ message: "This package has been delivered" });
+        .json({ error: "This package has been delivered" });
     } else {
   const CurrentLocation = req.body.currentLocation;
   Order.updateOne(
@@ -433,7 +433,7 @@ router.delete("/:orderId/delete", checkAuth, (req, res, next) => {
     if (foundStatus === "delivered") {
       return res
         .status(400)
-        .json({ message: "You cannot delete,this package has been delivered" });
+        .json({ error: "You cannot delete,this package has been delivered" });
     } else {
   Order.remove({ _id: id })
     .exec()
