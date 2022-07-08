@@ -124,8 +124,8 @@ router.post("/signup", (req, res, next) => {
                   res.status(500).json({
                     message: {
                       errors: [
-                        {field: 'email', messages: ['email is invalid']},
-                        {field: 'phoneNumber', messages: ['phoneNumber must start with country code', 'phoneNumber is shorter than the minimum allowed length (8)']}
+                        {field: 'email', message: ['email is invalid']},
+                        {field: 'phoneNumber', message: ['phoneNumber must start with country code', 'phoneNumber is shorter than the minimum allowed length (8)']}
                       ]
                     },
                   });
