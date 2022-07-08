@@ -75,7 +75,7 @@ router.post("/signup", (req, res, next) => {
       } else {  
         const {password} = req.body;
         if(password.length < 6  ) {
-          res.status(400).json({message:'Password must be more than 6 characters long'});
+          res.status(400).json({message:'Password should be atleast 6 characters long'});
             }else{
         bcrypt.hash(password, 10, (err, hash) => {
           bcrypt.compare(password, user.password, () => {
@@ -114,7 +114,6 @@ router.post("/signup", (req, res, next) => {
                       expiresIn: "1h",
                     }
                   );
-                  const decoded = jwt.verify(token, process.env.JWT_KEY);
                   return res.status(201).json({
                     message: "User Created",
                     token: token,
@@ -123,7 +122,12 @@ router.post("/signup", (req, res, next) => {
                 .catch((err) => {
                   console.log(err);
                   res.status(500).json({
-                    message: err,
+                    message: {
+                      errors: [
+                        {field: 'email', messages: ['email is invalid']},
+                        {field: 'phoneNumber', messages: ['phoneNumber must start with country code', 'phoneNumber is shorter than the minimum allowed length (8)']}
+                      ]
+                    },
                   });
                 });
             }
