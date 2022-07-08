@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 8,
     maxLength: 14,
-    match: /^(\+|00)[0-9]{1,3}[0-9]{4,14}(?:x.+)?$/,
+    match: /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/,
   },
   address: { type: String, required: true },
 });
