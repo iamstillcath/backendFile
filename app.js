@@ -41,7 +41,7 @@ const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
 
 mongoose
-  .connect(process.env.DATABASE_URL, { useNewUrlParser: true })
+  .connect(process.env.DATABASE_URL)
   .then((success) => {
     console.log("success");
   })
@@ -75,19 +75,19 @@ app.get("/", function (req, res) {
 app.use("/parcels", orderRoute);
 app.use("/user", userRoute);
 
-// app.use((req, res, next) => {
-//   const error = new Error("wrong route input");
-//   error.status = 404;
-//   next(error);
-// });
-// app.use((error, req, res, next) => {
-//   res.status(error.status || 500);
-//   res.json({
-//     error: {
-//       message: error.message,
-//     },
-//   });
-// });
+app.use((req, res, next) => {
+  const error = new Error("wrong route input");
+  error.status = 404;
+  next(error);
+});
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
+});
 
 
 
