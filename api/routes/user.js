@@ -206,7 +206,6 @@ router.post("/login", (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({
         message: "please check and correct the required fields",
       });
