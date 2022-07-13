@@ -62,79 +62,86 @@ const { token } = require("morgan");
  *
  */
 
+const errorFormatter = e => {
+  let errors = {};
+
+  // "User validation failed: email: Enter a valid email address!, phoneNumber: phoneNumber is not a valid!"
+
+  const allErrors = e.substring(e.indexOf(":") + 1).trim();
+  const allErrorsFormatted = allErrors.split(",").map((err) => err.trim());
+  allErrorsFormatted.forEach((error) => {
+    const [key, value] = error.split(":").map((err) => err.trim());
+    errors[key]=value
+  });
+  return errors
+};
+
 router.post("/signup", (req, res, next) => {
- 
   User.find({ email: req.body.email })
     .exec()
     .then((user) => {
-    
       if (user.length >= 1) {
         return res.status(409).json({
           message: "Account already exist for this Email",
         });
-      } else {  
-        const {password} = req.body;
-        if(password.length < 6  ) {
-          res.status(400).json({message:'Password should be atleast 6 characters long'});
-            }else{
-        bcrypt.hash(password, 10, (err, hash) => {
-          bcrypt.compare(password, user.password, () => {
-            if (err) {
-              return res.status(500).json({
-                message: "Incorrect credentials",
-              });
-            
-            }
-             else {
-            
-              const user = new User({
-                _id: new mongoose.Types.ObjectId(),
-                name: req.body.name,
-                email: req.body.email,
-                password: hash,
-                confirmPassword: hash,
-                phoneNumber: req.body.phoneNumber,
-                address: req.body.address,
-              });
-              user
-
-                .save()
-
-                .then((result) => {
-                  const adminEmail = "catherine@gmail.com";
-                  const role = user.email === adminEmail ? "admin" : "user";
-                  const token = jwt.sign(
-                    {
-                      email: user.email,
-                      userId: user._id,
-                      role,
-                    },
-                    process.env.JWT_KEY,
-                    {
-                      expiresIn: "1h",
-                    }
-                  );
-                  return res.status(201).json({
-                    message: "User Created",
-                    token: token,
-                  });
-                })
-                .catch((err) => {
-                  console.log(err);
-                  res.status(500).json({
-                    message: {
-                      errors: [
-                        {field: 'email', messages: ['email is invalid']},
-                        {field: 'phoneNumber', messages: ['phoneNumber must start with country code', 'phoneNumber is shorter than the minimum allowed length (8)']}
-                      ]
-                    },
-                  });
+      } else {
+        const { password } = req.body;
+        if (password.length < 6) {
+          res
+            .status(400)
+            .json({ message: "Password should be atleast 6 characters long" });
+        } else {
+          bcrypt.hash(password, 10, (err, hash) => {
+            bcrypt.compare(password, user.password, () => {
+              if (err) {
+                return res.status(500).json({
+                  message: "Incorrect credentials",
                 });
-            }
+              } else {
+                const user = new User({
+                  _id: new mongoose.Types.ObjectId(),
+                  name: req.body.name,
+                  email: req.body.email,
+                  password: hash,
+                  confirmPassword: hash,
+                  phoneNumber: req.body.phoneNumber,
+                  address: req.body.address,
+                });
+                user
+
+                  .save()
+
+                  .then((result) => {
+                    const adminEmail = "catherine@gmail.com";
+                    const role = user.email === adminEmail ? "admin" : "user";
+                    const token = jwt.sign(
+                      {
+                        email: user.email,
+                        userId: user._id,
+                        role,
+                      },
+                      process.env.JWT_KEY,
+                      {
+                        expiresIn: "1h",
+                      }
+                    );
+                    return res.status(201).json({
+                      message: "User Created",
+                      token: token,
+                    });
+                  })
+
+                  .catch((e) => {
+                    res.status(500).json({
+                      errors:errorFormatter(e.message)
+                    });
+                   
+                  });
+              }
+            });
           });
-        });
-            
-      }}
+        }
+      }
     });
 });
 
@@ -216,9 +223,7 @@ router.delete("/:userId", (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({
-        error: err,
-      });
+      res.status(500).json(err);
     });
 });
 

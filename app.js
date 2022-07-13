@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const path = require("path");
-const cors =require("cors")
+const cors = require("cors");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
@@ -24,12 +24,8 @@ let options = {
       },
     ],
     components: {
-      
-      securitySchemes: 
-      
-        {
-          bearerAuth: { type: "http", scheme: "bearer",bearerFormat: "JWT"},
-        
+      securitySchemes: {
+        bearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" },
       },
     },
   },
@@ -39,21 +35,24 @@ let options = {
 
 const swaggerSpec = swaggerJsDoc(options);
 app.use("/api-docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(express.static(path.join(__dirname, 'public')));
-
-
+app.use(express.static(path.join(__dirname, "public")));
 
 const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
 
-mongoose.connect(process.env.DATABASE_URL)
-.then(success=>{})
-.catch(error=>{})
+mongoose
+  .connect(process.env.DATABASE_URL, { useNewUrlParser: true })
+  .then((success) => {
+    console.log("success");
+  })
+  .catch((error) => {
+    console.log("this is err",error);
+  });
 
 mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -66,37 +65,32 @@ app.use((req, res, next) => {
     "Authorization"
   );
 
-
-  // if (req.method == "OPTIONS") {
-  //   res.header("Access-Control-Allow-Methods", "Authorization","PUT, GET, POST, PATCH,DELETE","OPTIONS");
-  //   return res.status(200).json({});
-  // }
   next();
 });
 
-
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/front/index.html'));
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname + "/front/index.html"));
 });
-
 
 app.use("/parcels", orderRoute);
 app.use("/user", userRoute);
 
-app.use((req, res, next) => {
-  const error = new Error("wrong route input");
-  error.status = 404;
-  next(error);
-});
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message,
-    },
-  });
-});
+// app.use((req, res, next) => {
+//   const error = new Error("wrong route input");
+//   error.status = 404;
+//   next(error);
+// });
+// app.use((error, req, res, next) => {
+//   res.status(error.status || 500);
+//   res.json({
+//     error: {
+//       message: error.message,
+//     },
+//   });
+// });
 
-app.listen(PORT, () => console.log(`app is running on port ${PORT}`))
+
+
+app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
 module.exports = app;
