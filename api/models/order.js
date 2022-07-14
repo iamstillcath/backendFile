@@ -10,9 +10,16 @@ const orderSchema = mongoose.Schema({
   currentLocation: { type: String, required: true },
   recipientName: { type: String, required: true },
   recipientNumber: { type: String , required: true ,
+    validate: {
+      validator: function (v) {
+        return /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/.test(v);
+      },
+      message: (props) =>
+        `${props.path} should be atleast (8)characters! & should contain a country code`,
+    },
     minLength: 8,
     maxLength: 14,
-    match: /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/,
+    match: /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/
    },
   userId: {type: String}
 });

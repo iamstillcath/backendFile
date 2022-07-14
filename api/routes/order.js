@@ -126,6 +126,21 @@ router.get("/", Admin, (req, res, next) => {
  *
  */
 
+
+ const errorFormatter = e => {
+  let errors = {};
+
+  // "User validation failed: email: Enter a valid email address!, phoneNumber: phoneNumber is not a valid!"
+
+  const allErrors = e.substring(e.indexOf(":") + 1).trim();
+  const allErrorsFormatted = allErrors.split(",").map((err) => err.trim());
+  allErrorsFormatted.forEach((error) => {
+    const [key, value] = error.split(":").map((err) => err.trim());
+    errors[key]=value
+  });
+  return errors
+};
+
 router.post("/", checkAuth, (req, res, next) => {
   const user = req.userData;
   const order = new Order({
@@ -156,9 +171,9 @@ router.post("/", checkAuth, (req, res, next) => {
         recipientNumber: result.recipientNumber,
       });
     })
-    .catch((err) => {
+    .catch((e) => {
       res.status(500).json({
-        error: err,
+        errors:errorFormatter(e.message)
       });
     });
 });
@@ -200,7 +215,7 @@ router.get("/user", checkAuth, (req, res, next) => {
       };
       return res.status(200).send(doc);
     })
-    .catch((err) => {
+    .catch((e) => {
       res.status(500).json({ message: "you have no parcel order" });
     });
 });

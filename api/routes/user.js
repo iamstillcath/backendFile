@@ -3,9 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const path = require("path");
 const User = require("../models/user");
-const { token } = require("morgan");
 
 /**
  * @swagger
@@ -130,7 +128,6 @@ router.post("/signup", (req, res, next) => {
                       token: token,
                     });
                   })
-
                   .catch((e) => {
                     res.status(500).json({
                       errors:errorFormatter(e.message)
