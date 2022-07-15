@@ -5,13 +5,6 @@ const userSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    validate: {
-      validator: function (v) {
-        return /^[a-zA-Z][a-zA-Z0-9-_]{2,20}$/.test(v);
-      },
-      message: (props) => `${props.path} is Invalid!`,
-    },
-    match: /^[a-zA-Z][a-zA-Z0-9-_]{2,20}$/,
   },
 
   email: {
