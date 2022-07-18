@@ -16,7 +16,6 @@ const userSchema = mongoose.Schema({
       },
       message: (props) => `Enter a valid ${props.path} address!`,
     },
-    match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
   },
   password: {
     type: String,
@@ -36,7 +35,6 @@ const userSchema = mongoose.Schema({
     },
     minLength: 8,
     maxLength: 14,
-    match: /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/,
   },
   address: { type: String, required: true },
 });
