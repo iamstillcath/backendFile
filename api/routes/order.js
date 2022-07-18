@@ -95,7 +95,7 @@ router.get("/", Admin, (req, res, next) => {
     .then((doc) => {
       const response = {
         count: doc.length,
-        parcels: doc,
+        data: doc,
       };
       res.status(200).json(doc);
     })
@@ -160,6 +160,7 @@ router.post("/", checkAuth, (req, res, next) => {
     .then((result) => {
       res.status(200).json({
         message: "order successfully created",
+        data:{
         id: result._id,
         itemDescription: result.itemDescription,
         price: result.price,
@@ -169,6 +170,7 @@ router.post("/", checkAuth, (req, res, next) => {
         currentLocation: result.currentLocation,
         recipientName: result.recipientName,
         recipientNumber: result.recipientNumber,
+        }
       });
     })
     .catch((e) => {

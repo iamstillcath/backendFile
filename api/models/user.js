@@ -18,7 +18,11 @@ const userSchema = mongoose.Schema({
     },
     match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
   },
-  password: { type: String, required: true, minLength: 6 },
+  password: {
+    type: String,
+    required: true,
+    minLength: 6,
+  },
   confirmPassword: { type: String, required: true },
   phoneNumber: {
     type: String,
@@ -36,6 +40,5 @@ const userSchema = mongoose.Schema({
   },
   address: { type: String, required: true },
 });
-
 
 module.exports = mongoose.model("User", userSchema);
