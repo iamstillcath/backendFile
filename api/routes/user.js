@@ -87,7 +87,7 @@ router.post("/signup", (req, res, next) => {
         if (password.length < 6) {
           res
             .status(400)
-            .json({ message: "Password should be atleast 6 characters long" });
+            .json({ error: "Password should be atleast 6 characters long" });
         }
          else {
           bcrypt.hash(password, 10, (err, hash) => {
