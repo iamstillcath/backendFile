@@ -60,7 +60,7 @@ const User = require("../models/user");
  *
  */
 
-const errorFormatter = e => {
+const errorFormatter = (e) => {
   let errors = {};
 
   // "User validation failed: email: Enter a valid email address!, phoneNumber: phoneNumber is not a valid!"
@@ -69,9 +69,9 @@ const errorFormatter = e => {
   const allErrorsFormatted = allErrors.split(",").map((err) => err.trim());
   allErrorsFormatted.forEach((error) => {
     const [key, value] = error.split(":").map((err) => err.trim());
-    errors[key]=value
+    errors[key] = value;
   });
-  return errors
+  return errors;
 };
 
 router.post("/signup", (req, res, next) => {
@@ -87,9 +87,8 @@ router.post("/signup", (req, res, next) => {
         if (password.length < 6) {
           res
             .status(400)
-            .json({ error: "Password should be atleast 6 characters long" });
-        }
-         else {
+            .json({ errors: "Password should be atleast 6 characters long" });
+        } else {
           bcrypt.hash(password, 10, (err, hash) => {
             bcrypt.compare(password, user.password, () => {
               if (err) {
@@ -131,9 +130,8 @@ router.post("/signup", (req, res, next) => {
                   })
                   .catch((e) => {
                     res.status(500).json({
-                      errors:errorFormatter(e.message)
+                      errors: errorFormatter(e.message),
                     });
-                   
                   });
               }
             });
@@ -169,13 +167,13 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: "Wrong email",
+          message: "Incorrect credentials",
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
           return res.status(401).json({
-            message: "Incorrect password",
+            message: "Incorrect credentials",
           });
         }
         if (result) {
