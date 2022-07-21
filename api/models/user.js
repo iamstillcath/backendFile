@@ -26,6 +26,7 @@ const userSchema = mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
+    unique: false,
     validate: {
       validator: function (v) {
         return /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/.test(v);

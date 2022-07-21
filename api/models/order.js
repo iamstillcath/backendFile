@@ -10,6 +10,7 @@ const orderSchema = mongoose.Schema({
   currentLocation: { type: String, required: true },
   recipientName: { type: String, required: true },
   recipientNumber: { type: String , required: true ,
+    unique: false,
     validate: {
       validator: function (v) {
         return /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/.test(v);
@@ -19,6 +20,7 @@ const orderSchema = mongoose.Schema({
     },
     minLength: 8,
     maxLength: 14,
+   
     match: /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/
    },
   userId: {type: String}
