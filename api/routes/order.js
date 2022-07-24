@@ -331,12 +331,7 @@ router.put("/:statusId/status", Admin, (req, res, next) => {
   Order.findOne({ _id: id })
     .exec()
     .then((ras) => {
-      const foundStatus = ras.status;
-      if (foundStatus === "delivered") {
-        return res
-          .status(400)
-          .json({ error: "This package has been delivered" });
-      } else {
+      
         Order.updateOne(
           { _id: id },
           {
@@ -353,7 +348,7 @@ router.put("/:statusId/status", Admin, (req, res, next) => {
               .json({ error: "no request found with this Id", status: 0 });
           });
       }
-    });
+    );
 });
 
 /**

@@ -18,10 +18,9 @@ const orderSchema = mongoose.Schema({
       message: (props) =>
         `${props.path} should be atleast (8)characters! & should contain a country code`,
     },
-    minLength: 8,
+    minLength: 7,
     maxLength: 14,
    
-    match: /^(\+|00)[0-9]{1,3}[0-9]{7,14}(?:x.+)?$/
    },
   userId: {type: String}
 });

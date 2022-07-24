@@ -35,7 +35,7 @@ let options = {
 
 const swaggerSpec = swaggerJsDoc(options);
 app.use("/api-docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 
 const orderRoute = require("./api/routes/order");
 const userRoute = require("./api/routes/user");
