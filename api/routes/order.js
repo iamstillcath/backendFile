@@ -93,10 +93,12 @@ router.get("/", Admin, (req, res, next) => {
     )
     .exec()
     .then((doc) => {
+      
       const response = {
         count: doc.length,
         data: doc,
       };
+      
       res.status(200).json(doc);
     })
     .catch((err) => {
@@ -211,10 +213,12 @@ router.get("/user", checkAuth, (req, res, next) => {
     )
     .exec()
     .then((doc) => {
+      console.log("this is user",doc)
       const response = {
         count: doc.length,
         parcels: doc,
       };
+      
       return res.status(200).send(doc);
     })
     .catch((e) => {

@@ -42,8 +42,8 @@ const userRoute = require("./api/routes/user");
 
 mongoose
   .connect(process.env.DATABASE_URL)
-  .then((success) => {
-    console.log("success");
+  .then(() => {
+    // console.log("success");
   })
   .catch((error) => {
     console.log("this is err",error);
@@ -68,9 +68,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname + "/front/index.html"));
-});
+// app.get("/", function (req, res) {
+//   res.sendFile(path.join(__dirname + "/front/index.html"));
+// });
 
 app.use("/parcels", orderRoute);
 app.use("/user", userRoute);

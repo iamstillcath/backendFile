@@ -190,7 +190,7 @@ router.post("/login", (req, res, next) => {
               expiresIn: "1h",
             }
           );
-          const decoded = jwt.verify(token, process.env.JWT_KEY);
+          // const decoded = jwt.verify(token, process.env.JWT_KEY);
           return res.status("200").json({
             message: "login successful",
             token: token,

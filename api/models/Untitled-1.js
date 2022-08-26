@@ -41,7 +41,7 @@ tables of the admin and user should have header for the icons===>done
 
 10.even if it is deliverd admin should be able to change just the status,disable edit and delete icon for users only because admins head might touch
 
-11. the status endpoint does not check if item is delivered or not,that is for the admin
+11. the status endpoint does not check if item is delivered or not,that is for the admin==>done
 
 2. the root of send-it-vanilla should only contain the Style,script, html
 all icons 
