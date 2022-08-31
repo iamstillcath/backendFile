@@ -68,9 +68,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/", function (req, res) {
-//   res.sendFile(path.join(__dirname + "/front/index.html"));
-// });
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname + "/front/index.html"));
+});
 
 app.use("/parcels", orderRoute);
 app.use("/user", userRoute);
